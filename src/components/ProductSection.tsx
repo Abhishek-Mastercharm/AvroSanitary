@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import RelatedProductsCarousel from './RelatedProductsCarousel';
+import NewLaunchSection from './NewLaunchSection';
 
 interface Product {
   id: number;
@@ -173,77 +174,80 @@ const ProductSection = () => {
   };
 
   return (
-    <section id="products" className="py-16 px-4 bg-white relative">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-extrabold text-charcoalBlack mb-2">
-            Our <span className="text-goldenBronze">Products</span>
-          </h2>
-          <div className="mx-auto mb-4 w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
-          <p className="text-xl text-charcoalBlack max-w-2xl mx-auto">
-            Discover our comprehensive range of premium sanitaryware products
-          </p>
-        </div>
-        <div className="divide-y divide-gray-300">
-          {categories.map((category, idx) => (
-            <div key={category.id} className="py-8 fade-in-row">
-              <div className="flex flex-col lg:flex-row gap-6">
-                {/* Main Product Card */}
-                <div className="lg:w-1/3">
-                  <div className="bg-pureWhite rounded-lg shadow-lg overflow-hidden">
-                    <div className="aspect-square relative">
-                      <img
-                        src={category.mainProduct.src}
-                        alt={category.mainProduct.alt}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-xl font-bold text-charcoalBlack">{category.name}</h3>
-                      <p className="text-charcoalBlack mt-2">Premium Quality Product with exceptional features and durability.</p>
+    <>
+      <NewLaunchSection />
+      <section id="products" className="py-16 px-4 bg-white relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl font-extrabold text-charcoalBlack mb-2">
+              Our <span className="text-goldenBronze">Products</span>
+            </h2>
+            <div className="mx-auto mb-4 w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
+            <p className="text-xl text-charcoalBlack max-w-2xl mx-auto">
+              Discover our comprehensive range of premium sanitaryware products
+            </p>
+          </div>
+          <div className="divide-y divide-gray-300">
+            {categories.map((category, idx) => (
+              <div key={category.id} className="py-8 fade-in-row">
+                <div className="flex flex-col lg:flex-row gap-6">
+                  {/* Main Product Card */}
+                  <div className="lg:w-1/3">
+                    <div className="bg-pureWhite rounded-lg shadow-lg overflow-hidden">
+                      <div className="aspect-square relative">
+                        <img
+                          src={category.mainProduct.src}
+                          alt={category.mainProduct.alt}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-xl font-bold text-charcoalBlack">{category.name}</h3>
+                        <p className="text-charcoalBlack mt-2">Premium Quality Product with exceptional features and durability.</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Related Products Carousel */}
-                <div className="lg:w-2/3">
-                  <RelatedProductsCarousel 
-                    products={category.products}
-                    currentProduct={currentProducts[category.id] || category.mainProduct}
-                    onProductSelect={(product) => handleProductSelect(category.id, product)}
-                    onImageClick={setSelectedImage}
-                    currentCategory={category.name}
-                  />
+                  {/* Related Products Carousel */}
+                  <div className="lg:w-2/3">
+                    <RelatedProductsCarousel 
+                      products={category.products}
+                      currentProduct={currentProducts[category.id] || category.mainProduct}
+                      onProductSelect={(product) => handleProductSelect(category.id, product)}
+                      onImageClick={setSelectedImage}
+                      currentCategory={category.name}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal for enlarged view */}
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="fixed top-6 right-6 text-white text-4xl font-bold bg-black/40 rounded-full px-3 py-1 hover:text-goldenBronze hover:bg-black/70 transition-colors z-50"
-            aria-label="Close image preview"
-          >
-            ×
-          </button>
-          <div className="relative w-full h-full flex items-center justify-center">
-            <img
-              src={selectedImage}
-              alt="Enlarged product view"
-              className="w-full h-full max-w-[98vw] max-h-[98vh] object-contain rounded-lg mx-auto"
-            />
+            ))}
           </div>
         </div>
-      )}
-    </section>
+
+        {/* Modal for enlarged view */}
+        {selectedImage && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="fixed top-6 right-6 text-white text-4xl font-bold bg-black/40 rounded-full px-3 py-1 hover:text-goldenBronze hover:bg-black/70 transition-colors z-50"
+              aria-label="Close image preview"
+            >
+              ×
+            </button>
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={selectedImage}
+                alt="Enlarged product view"
+                className="w-full h-full max-w-[98vw] max-h-[98vh] object-contain rounded-lg mx-auto"
+              />
+            </div>
+          </div>
+        )}
+      </section>
+    </>
   );
 };
 

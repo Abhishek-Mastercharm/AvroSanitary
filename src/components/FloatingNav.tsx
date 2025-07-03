@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, Star, Package, Mail, Menu, X } from 'lucide-react';
+import { Home, User, Star, Package, Mail, Menu, X, Rocket } from 'lucide-react';
 
 const FloatingNav = () => {
   const [activeSection, setActiveSection] = useState('hero');
@@ -9,6 +9,7 @@ const FloatingNav = () => {
     { id: 'hero', icon: Home, label: 'Home' },
     { id: 'about', icon: User, label: 'About' },
     { id: 'why-choose', icon: Star, label: 'Why Us' },
+    { id: 'new-launch', icon: Rocket, label: 'New Launch' },
     { id: 'products', icon: Package, label: 'Products' },
     { id: 'contact', icon: Mail, label: 'Contact' }
   ];

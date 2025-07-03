@@ -111,8 +111,8 @@ const ContactSection = () => {
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full flex justify-center mt-4">
-        <p className="text-sm text-white/60 text-center w-full">
+      <div className="w-full flex justify-center mt-4 z-10 relative">
+        <p className="text-sm text-white/80 text-center w-full">
           © {new Date().getFullYear()} Avro Original | All Rights Reserved.
         </p>
       </div>
