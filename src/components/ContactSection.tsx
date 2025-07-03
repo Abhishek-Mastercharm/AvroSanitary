@@ -78,7 +78,7 @@ const ContactSection = () => {
         </p>
           <div className="flex flex-row gap-8 md:gap-12 justify-center items-stretch flex-wrap md:divide-x md:divide-goldenBronze/20">
             {/* Email */}
-            <div className="flex flex-row items-center gap-4 flex-1 min-w-[200px] group px-2 md:px-6">
+            <div className="flex flex-row items-center gap-4 flex-[1_1_0%] min-w-[200px] group px-2 md:px-6">
               <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
                 <Mail className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
@@ -88,17 +88,17 @@ const ContactSection = () => {
               </div>
             </div>
             {/* Phone */}
-            <div className="flex flex-row items-center gap-4 flex-1 min-w-[200px] group px-2 md:px-6">
+            <div className="flex flex-row items-center gap-4 flex-[2_1_0%] min-w-[300px] group px-2 md:px-6">
               <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
                 <Phone className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
               <div>
                 <p className="font-semibold text-black">Phone</p>
-                <p className="text-black">+91 9501311070</p>
+                <p className="text-black whitespace-normal">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
               </div>
             </div>
             {/* WhatsApp */}
-            <div className="flex flex-row items-center gap-4 flex-1 min-w-[200px] group px-2 md:px-6">
+            <div className="flex flex-row items-center gap-4 flex-[1_1_0%] min-w-[200px] group px-2 md:px-6">
               <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
                 <MessageCircle className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
