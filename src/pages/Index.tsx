@@ -3,10 +3,10 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
-import WhyChooseSection from '@/components/WhyChooseSection';
 import ProductSection from '@/components/ProductSection';
 import ContactSection from '@/components/ContactSection';
 import FloatingNav from '@/components/FloatingNav';
+import NewLaunchSection from '@/components/NewLaunchSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,7 +39,7 @@ const Index = () => {
       <FloatingNav />
       <HeroSection />
       <AboutSection />
-      <WhyChooseSection />
+      <NewLaunchSection />
       <ProductSection />
       <ContactSection />
     </div>

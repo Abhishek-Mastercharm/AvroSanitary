@@ -1,32 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
-    
-    // Show success message (you could use a toast here)
-    alert('Thank you for your inquiry! We will get back to you soon.');
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
   return (
     <section
       id="contact"
@@ -69,11 +44,13 @@ const ContactSection = () => {
             </svg>
           </div>
           {/* Decorative Accent */}
-          <h3 className="text-2xl font-bold text-black mb-1 text-center">Get In Touch</h3>
-          <div className="flex justify-center mb-2">
-            <span className="inline-block w-16 h-1 rounded-full bg-goldenBronze/80"></span>
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-charcoalBlack sm:mb-1 md:mb-2">
+              Get <span className="text-goldenBronze">In Touch</span>
+            </h2>
+            <div className="mx-auto mb-1 sm:mb-0 md:mb-0 w-20 sm:w-28 md:w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
           </div>
-          <p className="text-sm font-normal text-black mb-6 text-center">
+          <p className="text-sm sm:text-base md:text-lg font-normal text-black mb-6 text-center">
           Ready to transform your space? Contact us for premium sanitaryware solutions
         </p>
           <div className="flex flex-row gap-8 md:gap-12 justify-center items-stretch flex-wrap md:divide-x md:divide-goldenBronze/20">
@@ -83,8 +60,8 @@ const ContactSection = () => {
                 <Mail className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
               <div>
-                <p className="font-semibold text-black">Email</p>
-                <p className="text-black">info@meoverseas.com</p>
+                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">Email</p>
+                <p className="text-black text-base sm:text-lg md:text-xl">info@meoverseas.com</p>
               </div>
             </div>
             {/* Phone */}
@@ -93,8 +70,8 @@ const ContactSection = () => {
                 <Phone className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
               <div>
-                <p className="font-semibold text-black">Phone</p>
-                <p className="text-black whitespace-normal">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
+                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">Phone</p>
+                <p className="text-black whitespace-normal text-base sm:text-lg md:text-xl">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
               </div>
             </div>
             {/* WhatsApp */}
@@ -103,8 +80,8 @@ const ContactSection = () => {
                 <MessageCircle className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
               </div>
               <div>
-                <p className="font-semibold text-black">WhatsApp</p>
-                <p className="text-black">+91 9501311070</p>
+                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">WhatsApp</p>
+                <p className="text-black text-base sm:text-lg md:text-xl">+91 9501311070</p>
               </div>
             </div>
           </div>

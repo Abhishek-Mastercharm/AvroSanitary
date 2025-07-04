@@ -34,15 +34,15 @@ const NewLaunchSection = () => {
       id="new-launch"
       data-section="new-launch"
       ref={sectionRef}
-      className={`fade-in-row py-16 px-4 bg-white relative overflow-hidden transition-all duration-500`}
+      className={`fade-in-row py-8 px-4 bg-slate-50 relative overflow-hidden transition-all duration-500`}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-extrabold text-charcoalBlack mb-2">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-charcoalBlack mb-2 sm:mb-4 md:mb-6">
             Newly <span className="text-goldenBronze">Launching Products</span>
           </h2>
-          <div className="mx-auto mb-4 w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
-          <p className="text-xl text-charcoalBlack max-w-2xl mx-auto">
+          <div className="mx-auto mb-2 sm:mb-4 md:mb-6 w-20 sm:w-28 md:w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-charcoalBlack max-w-2xl mx-auto">
             Discover our latest arrivals in premium products
           </p>
         </div>
@@ -67,7 +67,7 @@ const NewLaunchSection = () => {
                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                   />
                 </AspectRatio>
-                <span className="-mt-8 text-base font-medium text-charcoalBlack item-center w-full truncate">
+                <span className="-mt-8 text-base sm:text-lg md:text-xl font-medium text-charcoalBlack item-center w-full truncate">
                   {product.name}
                 </span>
               </div>

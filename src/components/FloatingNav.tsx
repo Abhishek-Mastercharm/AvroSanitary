@@ -8,7 +8,6 @@ const FloatingNav = () => {
   const navItems = [
     { id: 'hero', icon: Home, label: 'Home' },
     { id: 'about', icon: User, label: 'About' },
-    { id: 'why-choose', icon: Star, label: 'Why Us' },
     { id: 'new-launch', icon: Rocket, label: 'New Launch' },
     { id: 'products', icon: Package, label: 'Products' },
     { id: 'contact', icon: Mail, label: 'Contact' }
