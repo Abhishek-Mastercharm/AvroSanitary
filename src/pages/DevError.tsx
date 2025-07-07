@@ -56,13 +56,13 @@ const DevError = () => {
         </div>
         <div className="mt-4 text-xs text-gray-400">&copy; {new Date().getFullYear()} Abhishek Pandey. All rights reserved.</div>
       </div>
-      <div className="flex-1 flex items-center justify-center w-full max-w-xl">
-        <div className="w-full max-w-[400px] h-[70vh] overflow-x-hidden overflow-y-auto rounded-lg border border-gray-200 bg-white flex items-center justify-center shadow">
+      <div className="flex-1 flex w-full max-w-xl">
+        <div className="w-full max-w-2xl h-[85vh] overflow-y-auto overflow-x-hidden rounded-xl border-2 border-goldenBronze bg-white shadow-lg p-2">
           <img
-            src={'/images/Hero Section Img.jpg'}
+            src={'/images/screenshort.png'}
             alt="Website Screenshot Placeholder"
-            className="w-full object-contain"
-            style={{ maxHeight: '100%' }}
+            className="w-full object-contain object-top"
+            style={{ maxHeight: 'none' }}
           />
         </div>
       </div>
