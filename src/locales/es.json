@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "welcome": "BIENVENIDO A",
+    "headline1": "Elevando Espacios con",
+    "headline2": "Precisión y Elegancia",
+    "tagline": "Explora nuestra gama de sanitarios seleccionados con una experiencia visual inmersiva",
+    "cta": "Descubrir Productos"
+  },
+  "about": {
+    "title": "Sobre Nosotros",
+    "desc1": "AVRO Sanitaryware está comprometido con la calidad, la innovación y la satisfacción del cliente. Nuestros productos están diseñados para elevar los espacios con estilo y fiabilidad.",
+    "desc2": "Combinamos tradición y modernidad para ofrecer lo mejor en sanitarios."
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "desc": "¿Listo para transformar tu espacio? Contáctanos para soluciones sanitarias premium",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "whatsapp": "WhatsApp"
+  },
+  "product": {
+    "title": "Nuestros Productos",
+    "desc": "Descubre nuestra gama completa de productos sanitarios premium",
+    "novo": "Novo",
+    "novoAlt": "Sanitario Novo Premium",
+    "novoMonoblock": "Novo Monoblock",
+    "novoMonoblockAlt": "Sanitario Novo Monoblock",
+    "washBasin": "Lavabo",
+    "washBasinAlt": "Sanitario Lavabo",
+    "designWB": "Lavabo de Diseño",
+    "designWBAlt": "Sanitario Lavabo de Diseño",
+    "panUrinalSink": "PAN, Urinario, Fregadero",
+    "panUrinalSinkAlt": "Sanitario PAN, Urinario, Fregadero",
+    "other": "Otro",
+    "otherAlt": "Otros productos sanitarios",
+    "download": "Descargar PDF de {{name}}"
+  },
+  "newlaunch": {
+    "title": "Nuevos Productos Lanzados",
+    "desc": "Descubre nuestras últimas novedades en productos premium",
+    "modernSink": "Fregadero Moderno",
+    "elegantWC": "WC Elegante",
+    "designerBasin": "Lavabo de Diseño",
+    "luxuryTap": "Grifo de Lujo",
+    "compactUrinal": "Urinario Compacto",
+    "classicMonoblock": "Monoblock Clásico",
+    "premiumShower": "Ducha Premium"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Nosotros",
+    "newlaunch": "Novedad",
+    "products": "Productos",
+    "contact": "Contacto",
+    "hide": "Ocultar navegación",
+    "show": "Mostrar navegación"
+  },
+  "whatsapp": {
+    "aria": "Chatea con nosotros en WhatsApp",
+    "title": "Chatea con nosotros en WhatsApp"
+  },
+  "langswitch": {
+    "aria": "Cambiar idioma",
+    "title": "Cambiar idioma"
+  }
+} 
