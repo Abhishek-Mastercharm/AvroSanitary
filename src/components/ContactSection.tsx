@@ -34,7 +34,7 @@ const ContactSection = () => {
       }}
     >
       {/* Glassmorphism Effect Layer */}
-      <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-2xl pointer-events-none">
+      <div className="absolute inset-0 z-0 bg-white/10 backdrop-blur-2xl pointer-events-none">
         <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
           <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <filter id="contactNoiseFilter">
