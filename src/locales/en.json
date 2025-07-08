@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "welcome": "WELCOME TO",
+    "headline1": "Elevating Spaces with",
+    "headline2": "Precision & Elegance",
+    "tagline": "Explore our curated sanitaryware range with an immersive visual experience",
+    "cta": "Discover Products"
+  },
+  "about": {
+    "title": "About Us",
+    "desc1": "AVRO Sanitaryware is committed to quality, innovation, and customer satisfaction. Our products are designed to elevate spaces with style and reliability.",
+    "desc2": "We blend tradition with modernity to deliver the best in sanitaryware."
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "desc": "Ready to transform your space? Contact us for premium sanitaryware solutions",
+    "email": "Email",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp"
+  },
+  "product": {
+    "title": "Our Products",
+    "desc": "Discover our comprehensive range of premium sanitaryware products",
+    "novo": "Novo",
+    "novoAlt": "Premium Novo Sanitaryware",
+    "novoMonoblock": "Novo Monoblock",
+    "novoMonoblockAlt": "Novo Monoblock Sanitaryware",
+    "washBasin": "WashBasin",
+    "washBasinAlt": "Wash Basin Sanitaryware",
+    "designWB": "Design WB",
+    "designWBAlt": "Designer Wash Basin Sanitaryware",
+    "panUrinalSink": "PAN, Urinal, Sink",
+    "panUrinalSinkAlt": "PAN, Urinal, Sink Sanitaryware",
+    "other": "Other",
+    "otherAlt": "Other Sanitaryware Products",
+    "download": "Download {{name}} PDF"
+  },
+  "newlaunch": {
+    "title": "Newly Launching Products",
+    "desc": "Discover our latest arrivals in premium products",
+    "modernSink": "Modern Sink",
+    "elegantWC": "Elegant WC",
+    "designerBasin": "Designer Basin",
+    "luxuryTap": "Luxury Tap",
+    "compactUrinal": "Compact Urinal",
+    "classicMonoblock": "Classic Monoblock",
+    "premiumShower": "Premium Shower"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "newlaunch": "New Launch",
+    "products": "Products",
+    "contact": "Contact",
+    "hide": "Hide navigation",
+    "show": "Show navigation"
+  },
+  "whatsapp": {
+    "aria": "Chat with us on WhatsApp",
+    "title": "Chat with us on WhatsApp"
+  },
+  "langswitch": {
+    "aria": "Change language",
+    "title": "Change language"
+  }
+} 

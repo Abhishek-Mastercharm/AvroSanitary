@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ContactSection = () => {
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log('Form submitted:', formData);
+    setFormData({ name: '', email: '', message: '' });
+    alert('Thank you for your inquiry! We will get back to you soon.');
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <section
       id="contact"
       className="fade-in-row py-5 px-4 relative overflow-hidden"
       style={{
-        background: "linear-gradient(to bottom, #fff 20%, #29aae3 30%, #29aae3 60%, #362977 100%)"
+        background: "linear-gradient(to bottom, #fff 0%, #29aae3 30%, #29aae3 60%, #362977 100%)"
       }}
     >
       {/* Glassmorphism Effect Layer */}
-      <div className="absolute inset-0 z-0 bg-white/5 backdrop-blur-2xl pointer-events-none">
+      <div className="absolute inset-0 z-0 bg-white/60 backdrop-blur-2xl pointer-events-none">
         <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
           <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <filter id="contactNoiseFilter">
@@ -23,7 +46,6 @@ const ContactSection = () => {
       </div>
       <div className="flex justify-center">
         <div className="relative bg-white/80 backdrop-blur-lg border border-white/40 p-8 rounded-lg shadow-xl w-full max-w-7xl animate-fade-in overflow-hidden">
-        
           {/* Bubble Animation Layer */}
           <div className="absolute inset-0 z-0 pointer-events-none">
             <span className="absolute left-8 bottom-0 w-12 h-12 bg-red-400/40 rounded-full blur animate-bubble-float" />
@@ -44,15 +66,13 @@ const ContactSection = () => {
             </svg>
           </div>
           {/* Decorative Accent */}
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-charcoalBlack sm:mb-1 md:mb-2">
-              Get <span className="text-goldenBronze">In Touch</span>
-            </h2>
-            <div className="mx-auto mb-1 sm:mb-0 md:mb-0 w-20 sm:w-28 md:w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
+          <h3 className="text-2xl font-bold text-black mb-1 text-center">{t('contact.title')}</h3>
+          <div className="flex justify-center mb-2">
+            <span className="inline-block w-16 h-1 rounded-full bg-goldenBronze/80"></span>
           </div>
-          <p className="text-sm sm:text-base md:text-lg font-normal text-black mb-6 text-center">
-          Ready to transform your space? Contact us for premium sanitaryware solutions
-        </p>
+          <p className="text-sm font-normal text-black mb-6 text-center">
+            {t('contact.desc')}
+          </p>
           <div className="flex flex-row gap-8 md:gap-12 justify-center items-stretch flex-wrap md:divide-x md:divide-goldenBronze/20">
             {/* Email */}
             <div className="flex flex-row items-center gap-4 flex-[1_1_0%] min-w-[200px] group px-2 md:px-6">
@@ -61,7 +81,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <p className="font-semibold text-black text-base sm:text-lg md:text-xl">Email</p>
-                <p className="text-black text-base sm:text-lg md:text-xl">info@meoverseas.com</p>
+                <p className="text-black text-base sm:text-lg md:text-xl">info.marsexim@gmail.com</p>
               </div>
             </div>
             {/* Phone */}
@@ -88,8 +108,8 @@ const ContactSection = () => {
         </div>
       </div>
       {/* Footer */}
-      <div className="w-full flex justify-center mt-4 z-10 relative">
-        <p className="text-sm text-white/80 text-center w-full">
+      <div className="w-full flex justify-center mt-4">
+        <p className="text-sm text-white/60 text-center w-full">
           © {new Date().getFullYear()} Avro Original | All Rights Reserved.
         </p>
       </div>

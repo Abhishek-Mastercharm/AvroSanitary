@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Home, User, Star, Package, Mail, Menu, X, Rocket } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const FloatingNav = () => {
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('hero');
   const [showNav, setShowNav] = useState(true);
 
   const navItems = [
-    { id: 'hero', icon: Home, label: 'Home' },
-    { id: 'about', icon: User, label: 'About' },
-    { id: 'new-launch', icon: Rocket, label: 'New Launch' },
-    { id: 'products', icon: Package, label: 'Products' },
-    { id: 'contact', icon: Mail, label: 'Contact' }
+    { id: 'hero', icon: Home, label: t('nav.home') },
+    { id: 'about', icon: User, label: t('nav.about') },
+    { id: 'new-launch', icon: Rocket, label: t('nav.newlaunch') },
+    { id: 'products', icon: Package, label: t('nav.products') },
+    { id: 'contact', icon: Mail, label: t('nav.contact') }
   ];
 
   useEffect(() => {
@@ -32,20 +34,16 @@ const FloatingNav = () => {
         }
       });
 
-      // Fix: If at the very top, always set to 'hero'
       if (window.scrollY === 0) {
         setActiveSection('hero');
       } else if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2) {
-        // If at the very bottom, set to 'contact'
         setActiveSection('contact');
-      } else if (!found) {
-        // Optionally, set to null or keep previous
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId) || document.querySelector(`[data-section="${sectionId}"]`);
@@ -62,7 +60,7 @@ const FloatingNav = () => {
       <button
         className="fixed right-4 bottom-4 z-50 bg-pureWhite rounded-full shadow p-2"
         onClick={() => setShowNav((prev) => !prev)}
-        aria-label={showNav ? 'Hide navigation' : 'Show navigation'}
+        aria-label={showNav ? t('nav.hide') : t('nav.show')}
       >
         {showNav ? <X className="w-6 h-6 text-primaryBrown" /> : <Menu className="w-6 h-6 text-primaryBrown" />}
       </button>

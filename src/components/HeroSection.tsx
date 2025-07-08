@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ChevronDown } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+  const { t } = useTranslation();
   const logoRef = useRef(null);
   const headlineRef = useRef(null);
   const taglineRef = useRef(null);
@@ -120,7 +122,7 @@ const HeroSection = () => {
           <div className="flex flex-col items-center text-center mb-2">
             <div className="flex items-center justify-center mb-1">
               <span ref={leftLineRef} className="h-px w-12 bg-pureWhite opacity-60"></span>
-              <span ref={welcomeTextRef} className="uppercase text-xs tracking-widest text-pureWhite font-semibold mx-3">Welcome to</span>
+              <span ref={welcomeTextRef} className="uppercase text-xs tracking-widest text-pureWhite font-semibold mx-3">{t('hero.welcome', 'Welcome to')}</span>
               <span ref={rightLineRef} className="h-px w-12 bg-pureWhite opacity-60"></span>
             </div>
             <img
@@ -133,21 +135,21 @@ const HeroSection = () => {
           {/* Headline */}
           <div ref={headlineRef} className="mb-2 w-full text-center md:text-left">
             <h1 className="text-3xl md:text-5xl font-bold leading-tight text-pureWhite">
-              Elevating Spaces with
+              {t('hero.headline1')}
             </h1>
             <h1 className="text-3xl md:text-5xl font-bold leading-tight text-cyan-950">
-              Precision &amp; Elegance
+              {t('hero.headline2')}
             </h1>
           </div>
           <p ref={taglineRef} className="text-base md:text-lg text-cyan-950 mb-6 max-w-md mx-auto md:mx-0 text-center md:text-left">
-            Explore our curated sanitaryware range with an immersive visual experience
+            {t('hero.tagline')}
           </p>
           <button
             ref={ctaRef}
             onClick={handleScrollToProducts}
             className="bg-pureWhite text-black font-semibold px-8 py-3 rounded-full shadow border-2 border-cyan-600 transition-all duration-300 hover:border-cyan-900 hover:bg-cyan-800 hover:text-white hover:shadow-lg flex items-center gap-2 mb-4 animate-bounce mt-2"
           >
-            Discover Products <ChevronDown className="w-5 h-5" />
+            {t('hero.cta')} <ChevronDown className="w-5 h-5" />
           </button>
         </div>
 
@@ -173,8 +175,8 @@ const HeroSection = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="fixed top-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 flex items-center justify-center transition-colors duration-300 group animate-fadeInOut"
-        aria-label="Chat with us on WhatsApp"
-        title="Chat with us on WhatsApp"
+        aria-label={t('whatsapp.aria')}
+        title={t('whatsapp.title')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-7 h-7">
           <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.58 2.236 6.37L4 29l7.824-2.05A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.77 0-3.468-.46-4.94-1.33l-.352-.207-4.646 1.217 1.24-4.527-.23-.36A9.94 9.94 0 016 15c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.29-7.71c-.29-.145-1.71-.844-1.974-.94-.264-.096-.456-.145-.648.146-.192.29-.744.94-.912 1.134-.168.193-.336.217-.624.072-.288-.145-1.216-.448-2.318-1.428-.857-.764-1.436-1.705-1.606-1.994-.168-.29-.018-.447.127-.592.13-.13.288-.336.432-.504.144-.168.192-.29.288-.483.096-.193.048-.362-.024-.507-.072-.145-.648-1.566-.888-2.146-.234-.563-.474-.486-.648-.495-.168-.007-.36-.009-.552-.009-.192 0-.504.072-.768.362-.264.29-1.008.984-1.008 2.396 0 1.412 1.032 2.773 1.176 2.965.144.193 2.032 3.104 4.928 4.23.688.297 1.224.474 1.642.606.69.22 1.32.189 1.818.115.555-.082 1.71-.698 1.953-1.372.24-.674.24-1.252.168-1.372-.072-.12-.264-.193-.552-.338z"/>

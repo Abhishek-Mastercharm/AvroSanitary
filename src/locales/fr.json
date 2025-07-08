@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "welcome": "BIENVENUE CHEZ",
+    "headline1": "Élever les espaces avec",
+    "headline2": "Précision et Élégance",
+    "tagline": "Découvrez notre gamme de sanitaires sélectionnés avec une expérience visuelle immersive",
+    "cta": "Découvrir les produits"
+  },
+  "about": {
+    "title": "À propos de nous",
+    "desc1": "AVRO Sanitaryware s'engage pour la qualité, l'innovation et la satisfaction du client. Nos produits sont conçus pour sublimer les espaces avec style et fiabilité.",
+    "desc2": "Nous allions tradition et modernité pour offrir le meilleur des sanitaires."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "desc": "Prêt à transformer votre espace ? Contactez-nous pour des solutions sanitaires haut de gamme"
+  },
+  "product": {
+    "title": "Nos Produits",
+    "desc": "Découvrez notre gamme complète de produits sanitaires haut de gamme",
+    "novo": "Novo",
+    "novoAlt": "Sanitaires Novo Premium",
+    "novoMonoblock": "Novo Monoblock",
+    "novoMonoblockAlt": "Sanitaires Novo Monoblock",
+    "washBasin": "Lavabo",
+    "washBasinAlt": "Sanitaires Lavabo",
+    "designWB": "Lavabo Design",
+    "designWBAlt": "Lavabo Design Sanitaires",
+    "panUrinalSink": "PAN, Urinoir, Évier",
+    "panUrinalSinkAlt": "Sanitaires PAN, Urinoir, Évier",
+    "other": "Autre",
+    "otherAlt": "Autres produits sanitaires",
+    "download": "Télécharger le PDF {{name}}"
+  },
+  "newlaunch": {
+    "title": "Nouveaux produits lancés",
+    "desc": "Découvrez nos dernières nouveautés en produits haut de gamme",
+    "modernSink": "Évier Moderne",
+    "elegantWC": "WC Élégant",
+    "designerBasin": "Vasque Designer",
+    "luxuryTap": "Robinet de Luxe",
+    "compactUrinal": "Urinoir Compact",
+    "classicMonoblock": "Monobloc Classique",
+    "premiumShower": "Douche Premium"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "newlaunch": "Nouveauté",
+    "products": "Produits",
+    "contact": "Contact",
+    "hide": "Masquer la navigation",
+    "show": "Afficher la navigation"
+  },
+  "whatsapp": {
+    "aria": "Discuter avec nous sur WhatsApp",
+    "title": "Discuter avec nous sur WhatsApp"
+  },
+  "langswitch": {
+    "aria": "Changer de langue",
+    "title": "Changer de langue"
+  }
+} 
