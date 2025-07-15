@@ -1,6 +1,7 @@
 import React from 'react';
-import { Download } from 'lucide-react';
+import { Download, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import ReactDOM from 'react-dom';
 
 // Add the slow-pulse animation style at the top level
 if (typeof window !== 'undefined' && !document.getElementById('slow-pulse-style')) {
@@ -20,80 +21,94 @@ if (typeof window !== 'undefined' && !document.getElementById('slow-pulse-style'
 
 const productPosters = [
   {
+    name: 'product.wc',
+    baseName: 'wc',
+    alt: 'product.wcAlt',
+  },
+  {
+    name: 'product.lavabo',
+    baseName: 'lavabo',
+    alt: 'product.lavaboAlt',
+  },
+  {
+    name: 'product.luxWcMonobloc',
+    baseName: 'luxWcMonobloc',
+    alt: 'product.luxWcMonoblocAlt',
+  },
+  {
     name: 'product.novo',
     baseName: 'novo',
     alt: 'product.novoAlt',
   },
   {
-    name: 'product.novoMonoblock',
-    baseName: 'novo-monoblock',
-    alt: 'product.novoMonoblockAlt',
+    name: 'product.luxLavabo',
+    baseName: 'luxLavabo',
+    alt: 'product.luxLavaboAlt',
   },
   {
-    name: 'product.washBasin',
-    baseName: 'washbasin',
-    alt: 'product.washBasinAlt',
+    name: 'product.luxLaveMain',
+    baseName: 'luxLaveMain',
+    alt: 'product.luxLaveMainAlt',
   },
   {
-    name: 'product.designWB',
-    baseName: 'design-wb',
-    alt: 'product.designWBAlt',
+    name: 'product.wcSuspendu',
+    baseName: 'wcSuspendu',
+    alt: 'product.wcSuspenduAlt',
   },
   {
-    name: 'product.panUrinalSink',
-    baseName: 'pan-urinal-sink',
-    alt: 'product.panUrinalSinkAlt',
-  },
-  {
-    name: 'product.other',
-    baseName: 'other',
-    alt: 'product.otherAlt',
+    name: 'product.accessoires',
+    baseName: 'accessoires',
+    alt: 'product.accessoiresAlt',
   },
 ];
 
 const ProductPosterSection: React.FC = () => {
   const { t } = useTranslation();
+  const [enlarged, setEnlarged] = React.useState<null | { src: string; alt: string }>(null);
   return (
-    <section id="products" className="bg-white w-full p-0 m-0">
-      <div className="text-center mt-6 sm:mb-6 md:mb-8 lg:mb-10">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-charcoalBlack mb-2 sm:mb-3 md:mb-4">
-          {t('product.title')}
-        </h2>
-        <div className="mx-auto mb-1 sm:mb-2 md:mb-3 w-20 sm:w-28 md:w-32 h-1 rounded bg-gradient-to-r from-goldenBronze to-yellow-400 shadow-lg"></div>
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-charcoalBlack max-w-2xl mx-auto mb-4">
-          {t('product.desc')}
-        </p>
-      </div>
-      <div className="flex flex-col p-0 m-0 w-full">
-        {productPosters.map((product) => (
-          <div key={product.baseName} className="w-full aspect-[16/9] p-0 m-0 block relative">
-            <picture>
-              <source srcSet={`/images/${product.baseName}-xl.webp`} media="(min-width: 1536px)" />
-              <source srcSet={`/images/${product.baseName}-lg.webp`} media="(min-width: 1280px)" />
-              <source srcSet={`/images/${product.baseName}-md.webp`} media="(min-width: 1024px)" />
-              <source srcSet={`/images/${product.baseName}-sm.webp`} media="(min-width: 640px)" />
-              <source srcSet={`/images/${product.baseName}-xs.webp`} media="(max-width: 639px)" />
+    <>
+      {/* Overlay for enlarged image rendered in portal for fullscreen effect */}
+      {enlarged && typeof window !== 'undefined' && ReactDOM.createPortal(
+        <div className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center transition-all">
+          <div className="relative max-w-full max-h-full flex items-center justify-center">
+            <img
+              src={enlarged.src}
+              alt={enlarged.alt}
+              className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-2xl border-4 border-white object-contain"
+            />
+            <button
+              onClick={() => setEnlarged(null)}
+              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-black rounded-full p-2 shadow-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 z-10"
+              aria-label="Close enlarged image"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
+      <section id="products" className="bg-white w-[80%] mx-auto p-0 m-0">
+        <div className="flex flex-col p-0 m-0 w-full">
+          <div className="w-full grid grid-cols-1 gap-0">
+            {productPosters.map((product) => (
               <img
+                key={product.baseName}
                 src={`/images/${product.baseName}-xl.webp`}
                 alt={t(product.alt)}
-                className="w-full h-auto object-cover block p-0 m-0"
+                className="w-full h-auto block p-0 m-0 rounded-none shadow-none max-h-none cursor-pointer"
                 loading="lazy"
                 draggable="false"
+                onClick={() => setEnlarged({ src: `/images/${product.baseName}-xl.webp`, alt: t(product.alt) })}
               />
-            </picture>
-            {/* Download icon button at top-right */}
-            <a
-              href={`/pdfs/${product.baseName}.pdf`}
-              download
-              className="absolute top-2 right-2 md:top-3 md:right-3 z-20 bg-white/90 rounded-full p-1 md:p-2 shadow-lg border border-goldenBronze slow-pulse hover:animate-none hover:bg-goldenBronze transition-colors duration-200"
-              title={t('product.download', { name: t(product.name) })}
-            >
-              <Download className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-goldenBronze hover:text-white transition-colors duration-200" />
-            </a>
+            ))}
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+        {/* Visually hidden SEO keywords for search engines */}
+        <div style={{ position: 'absolute', left: '-9999px', color: 'white' }} aria-hidden="true">
+          sanitaryware, wash basin, toilet, wc, monoblock, lavabo, accessories, premium bathroom, Avro, Ludhiana, Punjab, India, ceramic, modern, designer, urinal, sink, bath, bathware, luxury, quality, Indian sanitaryware, Avro Original
+        </div>
+      </section>
+    </>
   );
 };
 

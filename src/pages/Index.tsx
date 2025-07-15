@@ -2,10 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HeroSection from '@/components/HeroSection';
-import AboutSection from '@/components/AboutSection';
 import ProductSection from '@/components/ProductSection';
 import ContactSection from '@/components/ContactSection';
-import FloatingNav from '@/components/FloatingNav';
 import NewLaunchSection from '@/components/NewLaunchSection';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -36,9 +34,7 @@ const Index = () => {
 
   return (
     <div ref={mainRef} className="min-h-screen bg-white">
-      <FloatingNav />
       <HeroSection />
-      <AboutSection />
       <NewLaunchSection />
       <ProductSection />
       <ContactSection />

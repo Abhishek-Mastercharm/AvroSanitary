@@ -4,26 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 const ContactSection = () => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    setFormData({ name: '', email: '', message: '' });
-    alert('Thank you for your inquiry! We will get back to you soon.');
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   return (
     <section
@@ -34,7 +14,7 @@ const ContactSection = () => {
       }}
     >
       {/* Glassmorphism Effect Layer */}
-      <div className="absolute inset-0 z-0 bg-white/10 backdrop-blur-2xl pointer-events-none">
+      <div className="absolute inset-0 z-0 bg-white/10  pointer-events-none">
         <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
           <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <filter id="contactNoiseFilter">
@@ -45,7 +25,7 @@ const ContactSection = () => {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative bg-white/80 backdrop-blur-lg border border-white/40 p-8 rounded-lg shadow-xl w-full max-w-7xl animate-fade-in overflow-hidden">
+        <div className="relative bg-white/80 backdrop-blur-lg border border-white/40 p-6 rounded-lg shadow-xl w-full max-w-xl animate-fade-in overflow-hidden flex items-center">
           {/* Bubble Animation Layer */}
           <div className="absolute inset-0 z-0 pointer-events-none">
             <span className="absolute left-8 bottom-0 w-12 h-12 bg-red-400/40 rounded-full blur animate-bubble-float" />
@@ -65,43 +45,26 @@ const ContactSection = () => {
               <rect width="100%" height="100%" filter="url(#noiseFilter)" />
             </svg>
           </div>
-          {/* Decorative Accent */}
-          <h3 className="text-2xl font-bold text-black mb-1 text-center">{t('contact.title')}</h3>
-          <div className="flex justify-center mb-2">
-            <span className="inline-block w-16 h-1 rounded-full bg-goldenBronze/80"></span>
-          </div>
-          <p className="text-sm font-normal text-black mb-6 text-center">
-            {t('contact.desc')}
-          </p>
-          <div className="flex flex-row gap-8 md:gap-12 justify-center items-stretch flex-wrap md:divide-x md:divide-goldenBronze/20">
+          {/* Contact Info */}
+          <div className="flex flex-row gap-4 md:gap-8 justify-center items-center w-full md:divide-x md:divide-goldenBronze/20">
             {/* Email */}
-            <div className="flex flex-row items-center gap-4 flex-[1_1_0%] min-w-[200px] group px-2 md:px-6">
-              <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                <Mail className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
+            <div className="flex flex-row items-center gap-2 flex-1 min-w-[120px] group px-2">
+              <div className="w-8 h-8 bg-goldenBronze/10 rounded-full flex items-center justify-center">
+                <Mail className="w-5 h-5 text-goldenBronze" />
               </div>
               <div>
-                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">Email</p>
-                <p className="text-black text-base sm:text-lg md:text-xl">marsexim@gmail.com</p>
+                <p className="font-semibold text-black text-sm">Email</p>
+                <p className="text-black text-xs">marsexim@gmail.com</p>
               </div>
             </div>
             {/* Phone */}
-            <div className="flex flex-row items-center gap-4 flex-[2_1_0%] min-w-[300px] group px-2 md:px-6">
-              <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                <Phone className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
+            <div className="flex flex-row items-center gap-2 flex-1 min-w-[180px] group px-2">
+              <div className="w-8 h-8 bg-goldenBronze/10 rounded-full flex items-center justify-center">
+                <Phone className="w-5 h-5 text-goldenBronze" />
               </div>
               <div>
-                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">Phone</p>
-                <p className="text-black whitespace-normal text-base sm:text-lg md:text-xl">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
-              </div>
-            </div>
-            {/* WhatsApp */}
-            <div className="flex flex-row items-center gap-4 flex-[1_1_0%] min-w-[200px] group px-2 md:px-6">
-              <div className="w-12 h-12 bg-goldenBronze/10 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                <MessageCircle className="w-6 h-6 text-goldenBronze transition-colors duration-300 group-hover:text-primaryBrown" />
-              </div>
-              <div>
-                <p className="font-semibold text-black text-base sm:text-lg md:text-xl">WhatsApp</p>
-                <p className="text-black text-base sm:text-lg md:text-xl">+91 9501311070</p>
+                <p className="font-semibold text-black text-sm">Phone</p>
+                <p className="text-black text-xs whitespace-normal">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
               </div>
             </div>
           </div>
@@ -109,7 +72,7 @@ const ContactSection = () => {
       </div>
       {/* Footer */}
       <div className="w-full flex justify-center mt-4">
-        <p className="text-sm text-white/60 text-center w-full">
+        <p className="text-sm text-white text-center w-full">
           © {new Date().getFullYear()} Avro Original | All Rights Reserved.
         </p>
       </div>
