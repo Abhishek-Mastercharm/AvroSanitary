@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AspectRatio } from './ui/aspect-ratio';
-import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
 
@@ -16,7 +14,6 @@ const products = [
 ];
 
 const NewLaunchSection = () => {
-  const { t } = useTranslation();
   const [hovered, setHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -78,15 +75,15 @@ const NewLaunchSection = () => {
             >
               {products.concat(products).map((product, idx) => (
                 <div key={idx} className="flex flex-col items-center min-w-[216px]">
-                  <AspectRatio ratio={1} className="w-40 h-40 bg-white rounded-lg overflow-hidden flex items-center justify-center group cursor-pointer" onClick={() => setEnlarged({ src: product.src, alt: t(product.name) })}>
+                  <div className="w-40 h-40 bg-white rounded-lg overflow-hidden flex items-center justify-center group cursor-pointer" onClick={() => setEnlarged({ src: product.src, alt: product.name })}>
                     <img
                       src={product.src}
-                      alt={t(product.name)}
+                      alt={product.name}
                       className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
-                  </AspectRatio>
-                  <span className="-mt-8 text-base sm:text-lg md:text-xl font-medium text-charcoalBlack item-center w-full truncate">
-                    {t(product.name)}
+                  </div>
+                  <span className="mt-2 text-base sm:text-lg md:text-xl font-medium text-charcoalBlack item-center w-full truncate">
+                    {product.name}
                   </span>
                 </div>
               ))}

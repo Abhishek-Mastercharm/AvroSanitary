@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 const ContactSection = () => {
-  const { t } = useTranslation();
 
   return (
     <section

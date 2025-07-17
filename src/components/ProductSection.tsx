@@ -1,6 +1,5 @@
 import React from 'react';
-import { Download, X } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
 
 // Add the slow-pulse animation style at the top level
@@ -63,7 +62,6 @@ const productPosters = [
 ];
 
 const ProductPosterSection: React.FC = () => {
-  const { t } = useTranslation();
   const [enlarged, setEnlarged] = React.useState<null | { src: string; alt: string }>(null);
   return (
     <>
@@ -94,11 +92,11 @@ const ProductPosterSection: React.FC = () => {
               <img
                 key={product.baseName}
                 src={`/images/${product.baseName}-xl.webp`}
-                alt={t(product.alt)}
+                alt={product.alt}
                 className="w-full h-auto block p-0 m-0 rounded-none shadow-none max-h-none cursor-pointer"
                 loading="lazy"
                 draggable="false"
-                onClick={() => setEnlarged({ src: `/images/${product.baseName}-xl.webp`, alt: t(product.alt) })}
+                onClick={() => setEnlarged({ src: `/images/${product.baseName}-xl.webp`, alt: product.alt })}
               />
             ))}
           </div>
