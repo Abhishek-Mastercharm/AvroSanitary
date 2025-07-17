@@ -6,7 +6,7 @@ const ContactSection = () => {
   return (
     <section
       id="contact"
-      className="fade-in-row py-5 px-4 relative overflow-hidden"
+      className="py-5 px-4 relative overflow-hidden"
       style={{
         background: "linear-gradient(to bottom, #fff 0%, #29aae3 30%, #29aae3 60%, #362977 100%)"
       }}
