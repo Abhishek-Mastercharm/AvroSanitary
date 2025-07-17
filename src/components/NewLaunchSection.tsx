@@ -82,9 +82,6 @@ const NewLaunchSection = () => {
                       className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <span className="mt-2 text-base sm:text-lg md:text-xl font-medium text-charcoalBlack item-center w-full truncate">
-                    {product.name}
-                  </span>
                 </div>
               ))}
             </div>
