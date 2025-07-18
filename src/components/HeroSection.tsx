@@ -4,9 +4,9 @@ import { Download } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 // EmailJS config (replace with your actual IDs)
-const EMAILJS_SERVICE_ID = 'your_service_id';
-const EMAILJS_TEMPLATE_ID = 'your_template_id';
-const EMAILJS_PUBLIC_KEY = 'your_public_id';
+const EMAILJS_SERVICE_ID = 'service_q04xjhj';
+const EMAILJS_TEMPLATE_ID = 'template_vsqunkg';
+const EMAILJS_PUBLIC_KEY = 'PA4ouZXrSJ0WNTVlH';
 
 function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: () => void; onDownload: () => void }) {
   const [countryCode, setCountryCode] = useState('+91');

@@ -3,14 +3,14 @@ import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
 
 const products = [
-  { name: 'newlaunch.product4', src: '/images/1 (0).jpeg' },
-  { name: 'newlaunch.product1', src: '/images/1 (1).png' },
-  { name: 'newlaunch.product2', src: '/images/1 (2).png' },
-  { name: 'newlaunch.product3', src: '/images/1 (3).png' },
-  { name: 'newlaunch.product4', src: '/images/1 (4).png' },
-  { name: 'newlaunch.product4', src: '/images/1 (5).jpeg' },
-  { name: 'newlaunch.product4', src: '/images/1 (6).jpg' },
-  { name: 'newlaunch.product4', src: '/images/1 (7).png' },
+  { name: 'OCEAN / VENUS WC', src: '/images/1 (0).jpeg' },
+  { name: 'NOVO LUX WC', src: '/images/1 (1).png' },
+  { name: 'LUX LAVABO', src: '/images/1 (2).png' },
+  { name: 'CLASSICA SET', src: '/images/1 (3).png' },
+  { name: 'CHAISE ANGLAISE', src: '/images/1 (4).png' },
+  { name: 'WUDU LAVABO', src: '/images/1 (5).jpeg' },
+  { name: 'CARREAUX', src: '/images/1 (6).jpg' },
+  { name: 'CPVC tuyaux', src: '/images/1 (7).png' },
 ];
 
 const NewLaunchSection = () => {
@@ -82,6 +82,9 @@ const NewLaunchSection = () => {
                       className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
+                  <span className="mt-2 text-center text-sm font-semibold text-gray-700 whitespace-nowrap">
+                    {product.name}
+                  </span>
                 </div>
               ))}
             </div>
