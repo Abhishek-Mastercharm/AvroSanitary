@@ -58,7 +58,7 @@ const NewLaunchSection = () => {
         id="new-launch"
         data-section="new-launch"
         ref={sectionRef}
-        className={`fade-in-row py-8 px-4 bg-slate-50 relative overflow-hidden transition-all duration-500`}
+        className={`fade-in-row py-8 px-0 sm:px-4 bg-slate-50 relative overflow-hidden transition-all duration-500`}
       >
         <div className="max-w-7xl mx-auto">
           <div
@@ -67,15 +67,22 @@ const NewLaunchSection = () => {
             onMouseLeave={() => setHovered(false)}
           >
             <div
-              className={`flex items-end gap-6 transition-transform duration-500`}
+              className="flex items-end gap-6"
               style={{
-                animation: `marquee ${animationDuration}s linear infinite`,
-                animationDirection: direction,
+                width: `${products.length * 2 * 160 + products.length * 2 * 24}px`, // 160px image + 24px gap
+                animation: `marquee 24s linear infinite`,
+                animationDirection: hovered ? 'reverse' : 'normal',
               }}
             >
-              {products.concat(products).map((product, idx) => (
-                <div key={idx} className="flex flex-col items-center min-w-[216px]">
-                  <div className="w-40 h-40 bg-white rounded-lg overflow-hidden flex items-center justify-center group cursor-pointer" onClick={() => setEnlarged({ src: product.src, alt: product.name })}>
+              {[...products, ...products].map((product, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-col items-center w-40 min-w-40" // 160px fixed width
+                >
+                  <div
+                    className="w-40 h-40 bg-white rounded-lg overflow-hidden flex items-center justify-center group cursor-pointer"
+                    onClick={() => setEnlarged({ src: product.src, alt: product.name })}
+                  >
                     <img
                       src={product.src}
                       alt={product.name}
