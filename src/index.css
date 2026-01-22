@@ -118,6 +118,17 @@ All colors MUST be HSL.
   }
 }
 
+/* Swiper staircase alignment - align slides from center */
+.swiper-staircase .swiper-wrapper {
+  align-items: center !important;
+}
+
+.swiper-staircase .swiper-slide {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 ::selection {
   background: #0cffdf; 
   color: #252424;

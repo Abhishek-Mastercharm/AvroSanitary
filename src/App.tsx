@@ -1,4 +1,5 @@
 import Index from "./pages/Index";
+import Tiles from "./pages/Tiles";
 import DevError from "./pages/DevError";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
@@ -27,6 +28,17 @@ const App = () => {
 
   if (window.location.pathname === "/deverror") {
     return <DevError />;
+  }
+  if (window.location.pathname === "/tiles") {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Tiles />
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
   }
   if (window.location.pathname !== "/" && window.location.pathname !== "/index") {
     return <NotFound />;

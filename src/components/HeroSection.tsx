@@ -270,7 +270,7 @@ const HeroSection = () => {
         {/* Download Product Catalogue Button Small */}
         <button
           ref={ctaRef}
-          className="bg-pureWhite text-black font-semibold px-4 py-2 text-sm rounded-full shadow border border-cyan-600 transition-all duration-300 hover:border-cyan-900 hover:bg-cyan-800 hover:text-white hover:shadow-lg flex items-center gap-2 mb-8 animate-bounce mt-2 mx-auto"
+          className="bg-pureWhite text-black font-semibold px-4 py-2 text-sm rounded-full shadow border border-cyan-600 transition-all duration-300 hover:border-cyan-900 hover:bg-cyan-800 hover:text-white hover:shadow-lg flex items-center gap-2 mb-4 animate-bounce mt-2 mx-auto"
           onClick={() => setModalOpen(true)}
         >
           <span className="flex items-center justify-center w-7 h-7 rounded-full bg-cyan-100 mr-2">

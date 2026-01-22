@@ -1,6 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
+import PremiumTilesCTA from '@/components/PremiumTilesCTA';
 
 // Add the slow-pulse animation style at the top level
 if (typeof window !== 'undefined' && !document.getElementById('slow-pulse-style')) {
@@ -87,6 +88,10 @@ const ProductPosterSection: React.FC = () => {
       )}
       <section id="products" className="bg-white w-[80%] mx-auto p-0 m-0">
         <div className="flex flex-col p-0 m-0 w-full">
+          {/* Premium CTA section for Tiles */}
+          <div className="w-full">
+            <PremiumTilesCTA />
+          </div>
           <div className="w-full grid grid-cols-1 gap-0">
             {productPosters.map((product) => (
               <img
