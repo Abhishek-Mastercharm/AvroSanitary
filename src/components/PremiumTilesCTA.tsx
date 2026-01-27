@@ -2,7 +2,7 @@ import React from 'react';
 
 // Card background image - Unsplash tile/marble image
 // Change to local path if needed: '/images/tile-card-bg.jpg'
-const CARD_BG_IMAGE = 'https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?auto=format&fit=crop&w=1600&q=80';
+const CARD_BG_IMAGE = '/TilesImages/tileHeroImg.png';
 
 const PremiumTilesCTA: React.FC = () => {
   const [clicked, setClicked] = React.useState(false);

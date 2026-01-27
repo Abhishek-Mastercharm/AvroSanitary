@@ -133,3 +133,94 @@ All colors MUST be HSL.
   background: #0cffdf; 
   color: #252424;
 }
+
+/* ===========================================
+   Image Performance Optimization Styles
+   =========================================== */
+
+/**
+ * Blur Placeholder Effect
+ * Shows a blurred background while the image loads
+ * Uses CSS blur filter for a subtle loading effect
+ */
+.blur-placeholder {
+  background: linear-gradient(135deg, #e0e7ef 0%, #c5d0dc 50%, #e0e7ef 100%);
+  background-size: 200% 200%;
+  animation: blur-shimmer 1.5s ease-in-out infinite;
+  filter: blur(8px);
+}
+
+@keyframes blur-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/**
+ * Skeleton Loader Effect
+ * Animated gradient that simulates content loading
+ * Better for slow connections (2G/3G)
+ */
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    #e8eef5 0%,
+    #d4dce8 25%,
+    #f0f4f8 50%,
+    #d4dce8 75%,
+    #e8eef5 100%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/**
+ * Optimized Image Container
+ * Ensures proper layout and prevents CLS (Cumulative Layout Shift)
+ */
+.optimized-image-container {
+  /* Contain layout to prevent reflow */
+  contain: layout style paint;
+  /* Use GPU acceleration for smoother animations */
+  will-change: auto;
+}
+
+/**
+ * Image Loading States
+ * Smooth transition from placeholder to loaded image
+ */
+.optimized-image {
+  /* Prevent images from overflowing container */
+  max-width: 100%;
+  height: auto;
+  /* Smooth render */
+  image-rendering: auto;
+}
+
+.optimized-image.loading {
+  /* Hidden while loading - placeholder shows instead */
+  opacity: 0;
+}
+
+.optimized-image.loaded {
+  /* Fade in when loaded */
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/**
+ * Native Lazy Loading Enhancement
+ * For browsers that support content-visibility
+ * Further improves performance by skipping rendering of off-screen images
+ */
+@supports (content-visibility: auto) {
+  .lazy-image-wrapper {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px; /* Estimated height for better CLS */
+  }
+}

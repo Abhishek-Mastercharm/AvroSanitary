@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, Mail, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
-import { tileCategories, TileCategory, marbleCategories, MarbleCategory } from '../data/TileData';
+import { tileCategories, TileCategory, marbleCategories, MarbleCategory } from '@/data/TileData';
 import TileImage from '../components/TileImage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Navigation } from 'swiper/modules';
@@ -188,91 +188,6 @@ const Tiles = () => {
         );
     };
 
-    // Function to add one more image to the last 4 images as rectangle shape
-    const renderSizeImages = (size: any) => {
-        const images = size.images;
-        const totalImages = images.length;
-        
-        // Check if we need to add extra image (last 4 images become rectangle)
-        if (totalImages >= 4) {
-            const firstImages = images.slice(0, totalImages - 4);
-            const lastFourImages = images.slice(totalImages - 4);
-            
-            return (
-                <>
-                    {/* First images in 2-column grid */}
-                    <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-                        {firstImages.map((img: any, imgIdx: number) => (
-                            <ImageTile key={imgIdx} img={img} />
-                        ))}
-                    </div>
-                    
-                    {/* Last 4 images as rectangle shapes */}
-                    <div className="mt-6">
-                        <h5 className="text-sm font-semibold mb-3" style={{ color: '#d4af37' }}>
-                            Premium Collection
-                        </h5>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-                            {lastFourImages.map((img: any, imgIdx: number) => (
-                                <div
-                                    key={`rect-${imgIdx}`}
-                                    className="aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group relative"
-                                    style={{
-                                        backgroundColor: '#f5f5f5',
-                                        border: '1px solid rgba(212, 175, 55, 0.1)'
-                                    }}
-                                    onClick={() => setEnlargedImage(img.src)}
-                                >
-                                    <TileImage
-                                        img={img}
-                                        className="w-full h-full object-cover transition-all duration-400 group-hover:scale-[1.05]"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                                    <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 lg:p-4 bg-gradient-to-t from-black/70 via-black/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-400">
-                                        <div className="text-xs sm:text-sm text-center text-white font-medium tracking-wide">
-                                            Click to enlarge
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </>
-            );
-        }
-        
-        // Regular 2-column grid for less than 4 images
-        return (
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-                {images.map((img: any, imgIdx: number) => (
-                    <ImageTile key={imgIdx} img={img} />
-                ))}
-            </div>
-        );
-    };
-
-    const ImageTile = ({ img }: { img: any }) => (
-        <div
-            className="aspect-square rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group relative"
-            style={{
-                backgroundColor: '#f5f5f5',
-                border: '1px solid rgba(212, 175, 55, 0.1)'
-            }}
-            onClick={() => setEnlargedImage(img.src)}
-        >
-            <TileImage
-                img={img}
-                className="w-full h-full object-cover transition-all duration-400 group-hover:scale-[1.05]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 lg:p-4 bg-gradient-to-t from-black/70 via-black/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-400">
-                <div className="text-xs sm:text-sm text-center text-white font-medium tracking-wide">
-                    Click to enlarge
-                </div>
-            </div>
-        </div>
-    );
-
     return (
         <div className="min-h-screen" style={{ backgroundColor: '#ffffff' }}>
             {/* Hero Section - Reduced height to show Collection section */}
@@ -307,8 +222,8 @@ const Tiles = () => {
                         <div className="absolute inset-0 opacity-20 sm:opacity-30">
                             <TileImage
                                 img={{
-                                    src: 'https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?auto=format&fit=crop&w=2000&q=80',
-                                    fallback: '/tiles/hero/hero.jpg',
+                                    src: '/TilesImages/tileHeroImg.png',
+                                    fallback: '/TilesImages/tileHeroImg.png',
                                     alt: 'Premium tiles hero wallpaper',
                                 }}
                                 className="w-full h-full object-cover"
@@ -481,22 +396,42 @@ const Tiles = () => {
                                 </div>
                             </div>
 
-                            {/* Size Variations with Special Layout for Last 4 Images */}
-                            <div className="space-y-6 sm:space-y-8 lg:space-y-10 pb-16 sm:pb-20 lg:pb-24">
+                            {/* Size Variations - 2 sizes per row for compact view */}
+                            <div key={activeCategoryId} className="grid grid-cols-2 gap-4 sm:gap-5 lg:gap-6 pb-8 sm:pb-10 lg:pb-12">
                                 {activeCategoryData.sizes.map((size, sizeIdx) => (
-                                    <div key={sizeIdx} className="space-y-3 sm:space-y-4">
-                                        <div>
-                                            <h4 className="text-sm sm:text-base md:text-lg font-bold px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 md:py-3 rounded-lg inline-block" style={{
-                                                color: '#d4af37',
-                                                backgroundColor: 'rgba(212, 175, 55, 0.08)',
-                                                border: '1px solid rgba(212, 175, 55, 0.15)'
-                                            }}>
-                                                {size.name}
-                                            </h4>
-                                        </div>
+                                    <div key={`${activeCategoryId}-${size.name}-${sizeIdx}`} className="space-y-2 sm:space-y-3">
+                                        {/* Size label */}
+                                        <h4 className="text-xs sm:text-sm md:text-base font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg inline-block" style={{
+                                            color: '#d4af37',
+                                            backgroundColor: 'rgba(212, 175, 55, 0.08)',
+                                            border: '1px solid rgba(212, 175, 55, 0.15)'
+                                        }}>
+                                            {size.name}
+                                        </h4>
                                         
-                                        {/* Render images with special layout for last 4 */}
-                                        {renderSizeImages(size)}
+                                        {/* Single image for this size */}
+                                        {size.images[0] && (
+                                            <div
+                                                className="aspect-square rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group relative"
+                                                style={{
+                                                    backgroundColor: '#f5f5f5',
+                                                    border: '1px solid rgba(212, 175, 55, 0.1)'
+                                                }}
+                                                onClick={() => setEnlargedImage(size.images[0].src)}
+                                            >
+                                                <TileImage
+                                                    key={`${activeCategoryId}-${size.name}-img`}
+                                                    img={size.images[0]}
+                                                    className="w-full h-full object-cover transition-all duration-400 group-hover:scale-[1.05]"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+                                                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-400">
+                                                    <div className="text-xs sm:text-sm text-center text-white font-medium tracking-wide">
+                                                        Click to enlarge
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -619,9 +554,6 @@ const Tiles = () => {
                                         PHONE
                                     </div>
                                     <div className="text-xs sm:text-sm md:text-base break-words mb-0.5 sm:mb-1" style={{ color: '#333333', opacity: 0.95 }}>
-                                        +91 9501311070
-                                    </div>
-                                    <div className="text-xs break-words" style={{ color: '#333333', opacity: 0.8 }}>
                                         +91 9779568485 | +91 7087255317
                                     </div>
                                 </div>
