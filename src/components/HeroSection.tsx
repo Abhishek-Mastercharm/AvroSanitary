@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+/** @jsxImportSource react */
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Download } from 'lucide-react';
+import { Download, X, Phone, Search, ChevronDown, Check } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 // EmailJS config (replace with your actual IDs)
@@ -10,20 +12,34 @@ const EMAILJS_PUBLIC_KEY = 'PA4ouZXrSJ0WNTVlH';
 
 function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: () => void; onDownload: () => void }) {
   const [countryCode, setCountryCode] = useState('+91');
-  const [countryOptions, setCountryOptions] = useState<{name: string, code: string}[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<{ name: string, code: string, flag: string } | null>(null);
+  const [countryOptions, setCountryOptions] = useState<{ name: string, code: string, flag: string }[]>([]);
   const [countryLoading, setCountryLoading] = useState(false);
   const [countryError, setCountryError] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [contact, setContact] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [touched, setTouched] = useState(false);
   const [success, setSuccess] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (open) {
       setCountryLoading(true);
       setCountryError('');
-      fetch('https://restcountries.com/v3.1/all?fields=name,idd')
+      fetch('https://restcountries.com/v3.1/all?fields=name,idd,flags')
         .then(res => res.json())
         .then(data => {
           // Flatten and sort country codes
@@ -32,14 +48,15 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
               const code = c.idd?.root && c.idd?.suffixes && c.idd.suffixes.length > 0
                 ? c.idd.root + c.idd.suffixes[0]
                 : null;
-              return code ? { name: c.name.common, code } : null;
+              return code ? { name: c.name.common, code, flag: c.flags?.png || c.flags?.svg || '' } : null;
             })
-            .filter(Boolean)
+            .filter((o: any) => o && o.flag)
             .sort((a: any, b: any) => a.name.localeCompare(b.name));
           setCountryOptions(options);
           // Default to +91 if available, else first
-          const defaultOption = options.find((o: any) => o.code === '+91') || options[0];
+          const defaultOption = options.find((o: any) => o.code === '+91' && o.name === 'India') || options.find((o: any) => o.code === '+91') || options[0];
           setCountryCode(defaultOption?.code || '');
+          setSelectedCountry(defaultOption || null);
           setCountryLoading(false);
         })
         .catch(() => {
@@ -49,11 +66,44 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
     }
   }, [open]);
 
+  const validatePhone = (num: string) => {
+    if (!num) return "Contact number is required";
+
+    // Global length check (supports various international standards)
+    if (num.length < 6 || num.length > 15) return "Enter a valid number (6-15 digits)";
+
+    // Country Specific: India (+91) - Strict 10-digit validation
+    if (countryCode === '+91') {
+      if (num.length !== 10) return "Indian numbers must be exactly 10 digits";
+      if (!/^[6-9]/.test(num)) return "Indian numbers must start with 6, 7, 8, or 9";
+    }
+
+    // Heuristic for all countries: Block simple repetitive/sequential patterns
+    if (/^(\d)\1+$/.test(num)) return "Please enter a valid, non-repetitive number";
+
+    const sequential = "01234567890 09876543210 123456789";
+    if (num.length >= 6 && (sequential.includes(num) || sequential.split('').reverse().join('').includes(num))) {
+      return "Please enter a valid, non-sequential number";
+    }
+
+    // Pattern check: Block sub-pattern repeats (e.g., 121212)
+    if (num.length >= 6) {
+      for (let len = 2; len <= Math.floor(num.length / 2); len++) {
+        const sub = num.slice(0, len);
+        if (num.split(sub).join('').length === 0) return "Please enter a valid personal number";
+      }
+    }
+
+    return "";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
-    if (!/^[0-9]{8,15}$/.test(contact)) {
-      setError("Please enter a valid contact number");
+
+    const validationError = validatePhone(contact);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     setError("");
@@ -82,62 +132,171 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="bg-pureWhite rounded-2xl shadow-2xl p-8 w-full max-w-sm relative border-2 border-primary flex flex-col items-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoalBlack/40 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-10 w-full max-w-md relative border border-white/20 flex flex-col items-center">
+        {/* Isolated Background Decoration (Clipping handled here) */}
+        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl" />
+        </div>
+
         <button
-          className="absolute top-2 right-2 text-gray-400 hover:text-primary text-2xl font-bold"
+          className="absolute top-4 right-4 text-charcoalBlack/30 hover:text-cyan-600 transition-all bg-lightGray/50 hover:bg-lightGray rounded-full w-10 h-10 flex items-center justify-center font-medium shadow-sm active:scale-95"
           onClick={onClose}
           aria-label="Close"
         >
-          ×
+          <X className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold mb-4 text-primary">Download Catalogue</h2>
-        {success ? (
-          <div className="text-green-600 font-semibold text-center py-8">Thank you! Your request has been submitted.<br/>Download will start shortly.</div>
-        ) : (
-        <form onSubmit={handleSubmit} className="space-y-4 w-full">
-          <div>
-            <label className="block text-sm font-medium mb-1 text-primary">Contact Number</label>
-            <div className="flex gap-2">
-              <select
-                className="border border-accent rounded-lg px-2 py-2 bg-lightGray text-charcoalBlack focus:outline-none"
-                value={countryCode}
-                onChange={e => setCountryCode(e.target.value)}
-                required
-                style={{ maxWidth: 120 }}
-                disabled={countryLoading || !!countryError}
-              >
-                {countryLoading && <option>Loading...</option>}
-                {countryError && <option>{countryError}</option>}
-                {!countryLoading && !countryError && countryOptions.map(opt => (
-                  <option key={opt.code + opt.name} value={opt.code}>
-                    {opt.name} ({opt.code})
-                  </option>
-                ))}
-              </select>
-              <input
-                type="tel"
-                className="flex-1 border border-accent rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary text-charcoalBlack bg-lightGray"
-                value={contact}
-                onChange={e => setContact(e.target.value)}
-                required
-                pattern="[0-9]{8,15}"
-                placeholder="Enter your contact number"
-              />
-            </div>
-            {touched && !/^[0-9]{8,15}$/.test(contact) && (
-              <span className="text-xs text-destructive">Enter a valid number (8-15 digits)</span>
-            )}
+
+        <div className="flex flex-col items-center mb-6 text-center">
+          <div className="w-12 h-12 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
+            <Download className="w-6 h-6 text-cyan-600" />
           </div>
-          {error && <div className="text-destructive text-sm text-center">{error}</div>}
-          <button
-            type="submit"
-            className="w-full bg-primary text-pureWhite py-2 rounded-lg font-semibold hover:bg-accent transition disabled:opacity-50 mt-2"
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Submit & Download"}
-          </button>
-        </form>
+          <h2 className="text-2xl font-bold text-charcoalBlack tracking-tight">Download Our Catalogue</h2>
+          <p className="text-sm text-charcoalBlack/60 mt-2">Get our latest collection directly to your device</p>
+        </div>
+        {success ? (
+          <div className="text-center py-8">
+            <div className="text-green-600 font-bold text-lg mb-2">Success!</div>
+            <p className="text-charcoalBlack/80 text-sm mb-4">
+              Catalogue requested for:<br />
+              <span className="font-bold text-primary">{countryCode} {contact}</span>
+            </p>
+            <div className="text-xs text-gray-500">Starting download...</div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-5 w-full relative z-10">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-charcoalBlack/70 ml-1">Contact Number</label>
+              <div className="flex gap-2 items-start relative">
+                {/* Custom Searchable Dropdown */}
+                <div className="relative" style={{ width: '40%', minWidth: '120px' }} ref={dropdownRef}>
+                  <button
+                    type="button"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    disabled={countryLoading || !!countryError}
+                    className="w-full flex items-center justify-between border border-charcoalBlack/10 rounded-xl px-3 py-3.5 bg-white text-charcoalBlack focus:outline-none focus:ring-2 focus:ring-cyan-500/20 appearance-none cursor-pointer text-xs sm:text-sm font-semibold transition-all shadow-sm disabled:opacity-50"
+                  >
+                    <span className="flex items-center gap-2 overflow-hidden truncate">
+                      {selectedCountry ? (
+                        <>
+                          <img
+                            src={selectedCountry.flag}
+                            alt=""
+                            className="w-5 h-3.5 object-cover rounded-[2px] bg-gray-100 shadow-sm"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = "https://flagcdn.com/w20/un.png";
+                            }}
+                          />
+                          <span className="truncate">{selectedCountry.code}</span>
+                        </>
+                      ) : (
+                        "Select"
+                      )}
+                    </span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-charcoalBlack/40 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {isDropdownOpen && (
+                    <div className="absolute top-full left-0 mt-2 w-[220px] sm:w-[260px] bg-white rounded-2xl shadow-2xl border border-charcoalBlack/5 overflow-hidden z-[60] animate-in zoom-in-95 fade-in duration-200 backdrop-blur-xl bg-white/95">
+                      <div className="p-2 border-b border-charcoalBlack/5 bg-lightGray/30">
+                        <div className="relative">
+                          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoalBlack/40" />
+                          <input
+                            type="text"
+                            placeholder="Search country..."
+                            className="w-full bg-white border-none rounded-lg py-2 pl-8 pr-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500/10 text-charcoalBlack placeholder:text-charcoalBlack/30"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                            autoFocus
+                          />
+                        </div>
+                      </div>
+                      <div className="max-h-[200px] overflow-y-auto custom-scrollbar p-1">
+                        {countryOptions
+                          .filter(opt =>
+                            opt.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            opt.code.includes(searchQuery)
+                          )
+                          .map((opt, idx) => (
+                            <div
+                              key={`${opt.name}-${opt.code}-${idx}`}
+                              className={`flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer transition-colors text-xs font-medium group hover:bg-cyan-50 ${countryCode === opt.code && selectedCountry?.name === opt.name ? 'bg-cyan-50/50 text-cyan-700' : 'text-charcoalBlack/80'
+                                }`}
+                              onClick={() => {
+                                setCountryCode(opt.code);
+                                setSelectedCountry(opt);
+                                setIsDropdownOpen(false);
+                                setSearchQuery('');
+                              }}
+                            >
+                              <div className="flex items-center gap-2.5 overflow-hidden">
+                                <img
+                                  src={opt.flag}
+                                  alt={opt.name}
+                                  loading="lazy"
+                                  className="w-5 h-3.5 object-cover rounded-[2px] shrink-0 bg-gray-100 shadow-sm"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).src = "https://flagcdn.com/w20/un.png";
+                                  }}
+                                />
+                                <span className="truncate">{opt.name}</span>
+                                <span className="text-charcoalBlack/40 group-hover:text-cyan-600/60 font-normal shrink-0">({opt.code})</span>
+                              </div>
+                              {countryCode === opt.code && selectedCountry?.name === opt.name && (
+                                <Check className="w-3.5 h-3.5 text-cyan-600 shrink-0" />
+                              )}
+                            </div>
+                          ))}
+                        {countryOptions.filter(opt =>
+                          opt.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          opt.code.includes(searchQuery)
+                        ).length === 0 && (
+                            <div className="px-3 py-8 text-center text-xs text-charcoalBlack/40">
+                              No countries found
+                            </div>
+                          )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="relative flex-1 group">
+                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2">
+                    <Phone className={`w-3.5 h-3.5 ${touched && validatePhone(contact) ? 'text-red-400' : 'text-cyan-600'}`} />
+                  </div>
+                  <input
+                    type="tel"
+                    value={contact}
+                    onChange={e => {
+                      const val = e.target.value.replace(/\D/g, "");
+                      if (val.length <= 15) {
+                        setContact(val);
+                        if (error) setError("");
+                      }
+                    }}
+                    required
+                    placeholder="Number"
+                    className={`w-full border rounded-xl pl-9 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-charcoalBlack bg-white text-xs sm:text-sm font-semibold transition-all shadow-sm ${touched && validatePhone(contact) ? "border-red-400 ring-2 ring-red-500/10" : "border-charcoalBlack/10 focus:border-cyan-500/50"
+                      }`}
+                  />
+                </div>
+              </div>
+              {touched && validatePhone(contact) && (
+                <span className="text-[11px] text-red-500 mt-2 block font-medium ml-1">
+                  {validatePhone(contact)}
+                </span>
+              )}
+            </div>
+            {error && <div className="text-red-500 text-xs font-medium text-center bg-red-50 py-2 rounded-lg border border-red-100">{error}</div>}
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3.5 rounded-xl font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform active:scale-[0.98] disabled:opacity-50 mt-2 text-sm tracking-wide shadow-md"
+              disabled={loading}
+            >
+              {loading ? "Verifying..." : "Download Now"}
+            </button>
+          </form>
         )}
       </div>
     </div>
@@ -227,7 +386,7 @@ const HeroSection = () => {
         background: "linear-gradient(to bottom, #362977 0%, #29aae3 40%, #29aae3 70%, #fff 95%, #fff 100%)"
       }}
     >
-      
+
       {/* Glassmorphism Effect Layer */}
       <div className="absolute inset-0 z-0 bg-white/5 backdrop-blur-2xl rounded-none pointer-events-none">
 
@@ -290,7 +449,7 @@ const HeroSection = () => {
         title="Contact us on WhatsApp"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-6 h-6 sm:w-7 sm:h-7">
-          <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.58 2.236 6.37L4 29l7.824-2.05A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.77 0-3.468-.46-4.94-1.33l-.352-.207-4.646 1.217 1.24-4.527-.23-.36A9.94 9.94 0 016 15c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.29-7.71c-.29-.145-1.71-.844-1.974-.94-.264-.096-.456-.145-.648.146-.192.29-.744.94-.912 1.134-.168.193-.336.217-.624.072-.288-.145-1.216-.448-2.318-1.428-.857-.764-1.436-1.705-1.606-1.994-.168-.29-.018-.447.127-.592.13-.13.288-.336.432-.504.144-.168.192-.29.288-.483.096-.193.048-.362-.024-.507-.072-.145-.648-1.566-.888-2.146-.234-.563-.474-.486-.648-.495-.168-.007-.36-.009-.552-.009-.192 0-.504.072-.768.362-.264.29-1.008.984-1.008 2.396 0 1.412 1.032 2.773 1.176 2.965.144.193 2.032 3.104 4.928 4.23.688.297 1.224.474 1.642.606.69.22 1.32.189 1.818.115.555-.082 1.71-.698 1.953-1.372.24-.674.24-1.252.168-1.372-.072-.12-.264-.193-.552-.338z"/>
+          <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.58 2.236 6.37L4 29l7.824-2.05A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.77 0-3.468-.46-4.94-1.33l-.352-.207-4.646 1.217 1.24-4.527-.23-.36A9.94 9.94 0 016 15c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.29-7.71c-.29-.145-1.71-.844-1.974-.94-.264-.096-.456-.145-.648.146-.192.29-.744.94-.912 1.134-.168.193-.336.217-.624.072-.288-.145-1.216-.448-2.318-1.428-.857-.764-1.436-1.705-1.606-1.994-.168-.29-.018-.447.127-.592.13-.13.288-.336.432-.504.144-.168.192-.29.288-.483.096-.193.048-.362-.024-.507-.072-.145-.648-1.566-.888-2.146-.234-.563-.474-.486-.648-.495-.168-.007-.36-.009-.552-.009-.192 0-.504.072-.768.362-.264.29-1.008.984-1.008 2.396 0 1.412 1.032 2.773 1.176 2.965.144.193 2.032 3.104 4.928 4.23.688.297 1.224.474 1.642.606.69.22 1.32.189 1.818.115.555-.082 1.71-.698 1.953-1.372.24-.674.24-1.252.168-1.372-.072-.12-.264-.193-.552-.338z" />
         </svg>
       </a>
     </section>
