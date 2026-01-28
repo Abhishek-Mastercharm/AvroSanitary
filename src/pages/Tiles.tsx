@@ -1,5 +1,5 @@
 // pages/Tiles.tsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, Mail, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import LuxuryBackground from '../components/LuxuryBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,17 +26,23 @@ const Tiles = () => {
     const rightContentRef = useRef<HTMLDivElement>(null);
     const swiperRef = useRef<SwiperType | null>(null);
 
-    // Get active data based on section
-    const getActiveData = () => {
+    // Optimized Data Access: Memoized to prevent re-calculations
+    const activeCategories = useMemo(() =>
+        activeSection === 'tiles' ? tileCategories : marbleCategories
+        , [activeSection]);
+
+    const activeCategoryData = useMemo(() => {
         if (activeSection === 'tiles') {
             return tileCategories.find((cat) => cat.id === activeCategoryId) || tileCategories[0];
         } else {
             return marbleCategories.find((cat) => cat.id === activeCategoryId) || marbleCategories[0];
         }
-    };
+    }, [activeSection, activeCategoryId]);
 
-    const activeCategories = activeSection === 'tiles' ? tileCategories : marbleCategories;
-    const activeCategoryData = getActiveData();
+    // 0. Update page title for SEO
+    useEffect(() => {
+        document.title = "Avro Original | Premium Tile Collection & Luxury Surfaces";
+    }, []);
 
     // 1. Update the mobile check to use tablet breakpoint too
     useEffect(() => {
@@ -49,14 +56,8 @@ const Tiles = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+
     useEffect(() => {
-        if (heroRef.current) {
-            gsap.fromTo(
-                heroRef.current,
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
-            );
-        }
 
         categoryRefs.current.forEach((ref, index) => {
             if (ref) {
@@ -98,13 +99,31 @@ const Tiles = () => {
         categoryRefs.current = [];
     }, [activeCategoryId]);
 
+    // Optimized effect for Modal lifecycle and Keyboard navigation
+    useEffect(() => {
+        if (enlargedImage) {
+            document.body.style.overflow = 'hidden';
+
+            const handleEsc = (e: KeyboardEvent) => {
+                if (e.key === 'Escape') setEnlargedImage(null);
+            };
+            window.addEventListener('keydown', handleEsc);
+            return () => {
+                document.body.style.overflow = 'unset';
+                window.removeEventListener('keydown', handleEsc);
+            };
+        }
+    }, [enlargedImage]);
+
     const handleCategoryClick = (categoryId: string) => {
-        setActiveCategoryId(categoryId);
+        if (categoryId !== activeCategoryId) {
+            setActiveCategoryId(categoryId);
+        }
     };
 
     const renderCategoryTile = (category: TileCategory | MarbleCategory, index: number) => {
         // Staircase effect with increasing sizes aligned from bottom - SAME for desktop and mobile
-        
+
         // Staircase sizes - increasing from left to right
         const desktopSizes = [
             'w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32',
@@ -114,17 +133,17 @@ const Tiles = () => {
             'w-40 h-40 sm:w-44 sm:h-44 lg:w-48 lg:h-48'
         ];
 
-        // Mobile staircase sizes - same staircase effect but smaller
+        // Mobile staircase sizes - refined for better visibility
         const mobileSizes = [
-            'w-[55px] h-[55px]',
-            'w-[65px] h-[65px]',
-            'w-[75px] h-[75px]',
-            'w-[85px] h-[85px]',
-            'w-[95px] h-[95px]'
+            'w-[65px] h-[65px] sm:w-[75px] sm:h-[75px]',
+            'w-[75px] h-[75px] sm:w-[85px] sm:h-[85px]',
+            'w-[85px] h-[85px] sm:w-[95px] sm:h-[95px]',
+            'w-[95px] h-[95px] sm:w-[105px] sm:h-[105px]',
+            'w-[105px] h-[105px] sm:w-[115px] sm:h-[115px]'
         ];
 
         // Use staircase effect for both mobile and desktop
-        const stepImg = isMobile 
+        const stepImg = isMobile
             ? (mobileSizes[index] || mobileSizes[0])
             : (desktopSizes[index] || desktopSizes[0]);
         const isActive = category.id === activeCategoryId;
@@ -133,21 +152,24 @@ const Tiles = () => {
             <div
                 key={category.id}
                 ref={(el) => (categoryRefs.current[index] = el)}
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`${category.name} collection`}
                 className="relative cursor-pointer group/category transition-all duration-300 flex items-center justify-center"
                 onClick={() => handleCategoryClick(category.id)}
             >
                 <div
                     className="transition-all duration-500 flex items-center justify-center"
                     style={{
-                        backgroundColor: 'transparent',
-                        perspective: isMobile ? 'none' : '1000px'
+                        perspective: isMobile ? 'none' : '1200px',
+                        transformStyle: 'preserve-3d'
                     }}
                 >
                     <div className="relative shrink-0 group/image transform-gpu">
                         <div
                             className={`rounded-xl overflow-hidden ${stepImg} transition-all duration-500 transform-gpu ${isActive
-                                    ? 'ring-4 ring-offset-2 ring-offset-[#ffffff] ring-[#d4af37]'
-                                    : 'ring-1 ring-transparent'
+                                ? 'ring-4 ring-offset-2 ring-offset-[#ffffff] ring-[#d4af37]'
+                                : 'ring-1 ring-transparent'
                                 }`}
                             style={{
                                 backgroundColor: '#f5f5f5',
@@ -158,27 +180,27 @@ const Tiles = () => {
                             <div className="w-full h-full overflow-hidden">
                                 <TileImage
                                     img={category.images[0]}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover/image:scale-[1.1]"
+                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/image:scale-[1.05]"
                                 />
                             </div>
                         </div>
-                        {/* Dotted connector line for active state */}
+                        {/* Dotted connector line - Positioned to clear container boundaries */}
                         {isActive && (
-                            <div className="absolute left-1/2 -translate-x-1/2 top-full flex flex-col items-center pt-1 z-50 pointer-events-none">
-                                <div 
-                                    className="w-2 h-2 rounded-full" 
+                            <div className="absolute left-1/2 -translate-x-1/2 top-full flex flex-col items-center pt-2 z-50 pointer-events-none">
+                                <div
+                                    className="w-2 h-2 rounded-full"
                                     style={{ backgroundColor: '#d4af37' }}
                                 />
-                                <div 
-                                    className="w-0.5 h-5 sm:h-6 lg:h-8" 
-                                    style={{ 
+                                <div
+                                    className="w-0.5 h-5 sm:h-6 lg:h-8"
+                                    style={{
                                         backgroundImage: 'linear-gradient(to bottom, #d4af37 50%, transparent 50%)',
                                         backgroundSize: '2px 6px'
                                     }}
                                 />
-                                <div 
-                                    className="w-2.5 h-2.5 rotate-45 border-b-2 border-r-2" 
-                                    style={{ borderColor: '#d4af37', marginTop: '-5px' }}
+                                <div
+                                    className="w-3 h-3 rotate-45 border-b-2 border-r-2"
+                                    style={{ borderColor: '#d4af37', marginTop: '-4px' }}
                                 />
                             </div>
                         )}
@@ -189,35 +211,34 @@ const Tiles = () => {
     };
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: '#ffffff' }}>
-            {/* Hero Section - Reduced height to show Collection section */}
+        <main className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
+            <LuxuryBackground isMobile={isMobile} />
+            {/* Hero Section - GPU Accelerated */}
             <section
                 ref={heroRef}
-                className="relative min-h-[35vh] sm:min-h-[40vh] md:min-h-[45vh] lg:min-h-[50vh] flex items-cente   r justify-center pt-4 sm:pt-6 lg:pt-8"
-                
+                className="relative min-h-[45vh] sm:min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] flex items-center justify-center pt-4 sm:pt-6 lg:pt-8 will-change-transform"
+                style={{ contentVisibility: 'visible' }}
             >
                 <div className="relative w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-                                        <div className="absolute top-4 left-8 md:top-6 md:left-12 z-20">
-                                                <a
-                                                    href="/"
-                                                    aria-label="Back to sanitary homepage"
-                                                    className="group inline-flex items-center gap-2 text-sm sm:text-base font-semibold tracking-wide"
-                                                    style={{ color: '#d4af37' }}
-                                                >
-                                                    <ChevronLeft
-                                                        className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:-translate-x-0.5"
-                                                        style={{ color: '#d4af37' }}
-                                                    />
-                                                    <span className="border-b border-transparent transition-colors duration-200" style={{
-                                                        borderBottomColor: 'transparent'
-                                                    }}>
-                                                        Back to Sanitary
-                                                    </span>
-                                                </a>
-                                        </div>
+                    <div className="absolute top-4 left-8 md:top-6 md:left-12 z-20">
+                        <a
+                            href="/"
+                            aria-label="Back to sanitary homepage"
+                            className="group inline-flex items-center gap-2 text-sm sm:text-base font-semibold tracking-wide"
+                            style={{ color: '#d4af37' }}
+                        >
+                            <ChevronLeft
+                                className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:-translate-x-0.5"
+                                style={{ color: '#d4af37' }}
+                            />
+                            <span className="border-b border-transparent transition-colors duration-200" style={{ color: '#d4af37' }}>
+                                Back to Sanitary
+                            </span>
+                        </a>
+                    </div>
                     <div
-                        className={`relative overflow-hidden rounded-2xl sm:rounded-3xl ${isMobile ? 'h-[30vh]' : 'h-[45vh] sm:h-[50vh] lg:h-[55vh]'}`}
-                        style={{ borderColor: '#d4af37', backgroundColor: '#222224', borderWidth: '3px', borderStyle: 'solid' }}
+                        className={`relative overflow-hidden rounded-2xl sm:rounded-3xl ${isMobile ? 'h-[35vh]' : 'h-[50vh] sm:h-[55vh] lg:h-[60vh]'}`}
+                        style={{ borderColor: '#d4af37', backgroundColor: '#222224', borderWidth: '3px', borderStyle: 'solid', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
                     >
                         <div className="absolute inset-0 opacity-20 sm:opacity-30">
                             <TileImage
@@ -226,9 +247,11 @@ const Tiles = () => {
                                     fallback: '/TilesImages/tileHeroImg.png',
                                     alt: 'Premium tiles hero wallpaper',
                                 }}
+                                priority={true}
                                 className="w-full h-full object-cover"
                             />
                         </div>
+
                         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 tracking-tight" style={{ color: '#d4af37' }}>
                                 AVRO Tiles
@@ -241,8 +264,12 @@ const Tiles = () => {
                 </div>
             </section>
 
-            {/* Main Tiles Showcase Section */}
-            <section className="py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6" style={{ backgroundColor: '#ffffff' }}>
+
+            {/* Main Tiles Showcase Section - Performance Optimized */}
+            <section
+                className="relative z-10 py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6 bg-transparent"
+                style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1000px' } as any}
+            >
                 <div className="max-w-8xl mx-auto">
                     <div className="mb-6 sm:mb-8 lg:mb-10 text-center">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 tracking-tight" style={{ color: '#d4af37' }}>
@@ -251,19 +278,25 @@ const Tiles = () => {
                         {/* Removed the line below the heading */}
                     </div>
 
-                    {/* 1. Stylish Breadcrumb Navbar - Removed numbers */}
+                    {/* 1. Stylish Breadcrumb Navbar - Accessible TabList */}
                     <div className="flex justify-center mb-6 sm:mb-8">
-                        <div className="inline-flex rounded-xl overflow-hidden border" style={{ borderColor: '#d4af37' }}>
+                        <div
+                            className="inline-flex rounded-xl overflow-hidden border"
+                            style={{ borderColor: '#d4af37' }}
+                            role="tablist"
+                            aria-label="Product Categories"
+                        >
                             <button
                                 onClick={() => {
                                     setActiveSection('tiles');
                                     setActiveCategoryId(tileCategories[0].id);
                                 }}
-                                className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-sm sm:text-base font-medium transition-all duration-300 ${
-                                    activeSection === 'tiles'
-                                        ? 'text-[#ffffff]'
-                                        : 'text-[#333333] hover:text-[#d4af37]'
-                                }`}
+                                aria-selected={activeSection === 'tiles'}
+                                role="tab"
+                                className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-sm sm:text-base font-bold transition-all duration-300 ${activeSection === 'tiles'
+                                    ? 'text-[#1a1a1c]'
+                                    : 'text-[#333333] hover:text-[#d4af37]'
+                                    }`}
                                 style={{
                                     backgroundColor: activeSection === 'tiles' ? '#d4af37' : 'transparent'
                                 }}
@@ -275,11 +308,12 @@ const Tiles = () => {
                                     setActiveSection('marble');
                                     setActiveCategoryId(marbleCategories[0].id);
                                 }}
-                                className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-sm sm:text-base font-medium transition-all duration-300 ${
-                                    activeSection === 'marble'
-                                        ? 'text-[#ffffff]'
-                                        : 'text-[#333333] hover:text-[#d4af37]'
-                                }`}
+                                aria-selected={activeSection === 'marble'}
+                                role="tab"
+                                className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-sm sm:text-base font-bold transition-all duration-300 ${activeSection === 'marble'
+                                    ? 'text-[#1a1a1c]'
+                                    : 'text-[#333333] hover:text-[#d4af37]'
+                                    }`}
                                 style={{
                                     backgroundColor: activeSection === 'marble' ? '#d4af37' : 'transparent'
                                 }}
@@ -290,17 +324,17 @@ const Tiles = () => {
                     </div>
 
                     {/* ROW 1: HORIZONTAL STAIRCASE - Swiper for mobile, Flex for desktop */}
-                    <div className="pt-2 sm:pt-4 mb-8 sm:mb-10 lg:mb-14">
+                    <div className="pt-4 sm:pt-6 mb-12 sm:mb-16 lg:mb-20">
                         {isMobile ? (
-                            /* Mobile: Swiper with navigation */
-                            <div className="relative px-8 sm:px-10 overflow-hidden">
+                            /* Mobile: Swiper with Navigation and Active Indicator Support */
+                            <div className="relative px-10 sm:px-14">
                                 <Swiper
                                     modules={[FreeMode, Pagination, Navigation]}
-                                    spaceBetween={8}
-                                    slidesPerView={3.5}
+                                    spaceBetween={12}
+                                    slidesPerView={3}
                                     breakpoints={{
-                                        480: { slidesPerView: 4, spaceBetween: 8 },
-                                        640: { slidesPerView: 4.5, spaceBetween: 10 },
+                                        480: { slidesPerView: 3.5, spaceBetween: 15 },
+                                        640: { slidesPerView: 4, spaceBetween: 20 },
                                     }}
                                     centeredSlides={false}
                                     loop={false}
@@ -318,37 +352,34 @@ const Tiles = () => {
                                             setActiveCategoryId(activeCategories[realIndex].id);
                                         }
                                     }}
-                                    className="tiles-swiper swiper-staircase"
-                                    style={{ paddingBottom: '30px' }}
+                                    className="tiles-swiper swiper-staircase !overflow-visible"
+                                    style={{ paddingBottom: '50px' }}
                                 >
                                     {activeCategories.map((category, index) => (
-                                        <SwiperSlide key={category.id} className="!flex !items-center !justify-center">
+                                        <SwiperSlide key={category.id} className="!flex !items-end !justify-center pb-2">
                                             {renderCategoryTile(category, index)}
                                         </SwiperSlide>
                                     ))}
                                 </Swiper>
-                                {/* Custom Navigation Arrows for Mobile */}
+
+                                {/* Custom Navigation Arrows - High Visibility & Premium Style */}
                                 <button
                                     type="button"
                                     onClick={() => swiperRef.current?.slidePrev()}
-                                    className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-md"
-                                    style={{
-                                        backgroundColor: '#d4af37',
-                                        color: '#ffffff'
-                                    }}
+                                    className="absolute left-2 top-[35%] -translate-y-1/2 z-30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                                    style={{ backgroundColor: '#d4af37', color: '#ffffff' }}
+                                    aria-label="Previous Category"
                                 >
-                                    <ChevronLeft size={14} />
+                                    <ChevronLeft size={18} />
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => swiperRef.current?.slideNext()}
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-md"
-                                    style={{
-                                        backgroundColor: '#d4af37',
-                                        color: '#ffffff'
-                                    }}
+                                    className="absolute right-2 top-[35%] -translate-y-1/2 z-30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-lg"
+                                    style={{ backgroundColor: '#d4af37', color: '#ffffff' }}
+                                    aria-label="Next Category"
                                 >
-                                    <ChevronRight size={14} />
+                                    <ChevronRight size={18} />
                                 </button>
                             </div>
                         ) : (
@@ -377,57 +408,53 @@ const Tiles = () => {
                             {/* Active Category Header */}
                             <div className="mb-4 sm:mb-5 lg:mb-6">
                                 <div className="inline-block mb-3 sm:mb-4">
-                                    <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2 tracking-tight" style={{ color: '#d4af37' }}>
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 tracking-tight uppercase" style={{ color: '#d4af37' }}>
                                         {activeCategoryData.name}
                                     </h3>
-                                    <div className="w-12 sm:w-16 lg:w-20 h-1" style={{ backgroundColor: '#d4af37' }}></div>
+                                    <div className="w-full h-0.5 bg-[#d4af37] rounded-full opacity-60"></div>
                                 </div>
 
                                 <div className="space-y-2 sm:space-y-3">
-                                    <div className="flex items-center gap-2 sm:gap-3">
-                                        <div className="w-1.5 h-4 sm:h-5 md:h-6 rounded-full" style={{ backgroundColor: '#d4af37' }}></div>
-                                        <p className="text-base sm:text-lg md:text-xl font-semibold" style={{ color: '#333333' }}>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-1.5 h-5 sm:h-6 bg-[#d4af37]"></div>
+                                        <p className="text-lg sm:text-xl font-bold tracking-tight" style={{ color: '#1a1a1c' }}>
                                             {activeCategoryData.sizeRange}
                                         </p>
                                     </div>
-                                    <p className="text-xs sm:text-sm md:text-base leading-relaxed" style={{ color: '#333333', opacity: 0.9 }}>
+                                    <p className="text-sm sm:text-base md:text-lg leading-relaxed font-medium text-[#1a1a1c]/80">
                                         {activeCategoryData.description}
                                     </p>
                                 </div>
                             </div>
 
                             {/* Size Variations - 2 sizes per row for compact view */}
-                            <div key={activeCategoryId} className="grid grid-cols-2 gap-4 sm:gap-5 lg:gap-6 pb-8 sm:pb-10 lg:pb-12">
+                            <div key={activeCategoryId} className="grid grid-cols-2 gap-6 sm:gap-8 lg:gap-10 pb-8 sm:pb-10 lg:pb-12">
                                 {activeCategoryData.sizes.map((size, sizeIdx) => (
-                                    <div key={`${activeCategoryId}-${size.name}-${sizeIdx}`} className="space-y-2 sm:space-y-3">
-                                        {/* Size label */}
-                                        <h4 className="text-xs sm:text-sm md:text-base font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg inline-block" style={{
-                                            color: '#d4af37',
-                                            backgroundColor: 'rgba(212, 175, 55, 0.08)',
-                                            border: '1px solid rgba(212, 175, 55, 0.15)'
-                                        }}>
-                                            {size.name}
-                                        </h4>
-                                        
-                                        {/* Single image for this size */}
+                                    <div key={`${activeCategoryId}-${size.name}-${sizeIdx}`} className="group relative">
+                                        {/* Single image for this size with Anchored Badge */}
                                         {size.images[0] && (
                                             <div
-                                                className="aspect-square rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group relative"
-                                                style={{
-                                                    backgroundColor: '#f5f5f5',
-                                                    border: '1px solid rgba(212, 175, 55, 0.1)'
-                                                }}
+                                                className="aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden cursor-pointer group relative border-2 border-transparent hover:border-[#d4af37]/30 transition-all duration-500 shadow-sm hover:shadow-xl"
                                                 onClick={() => setEnlargedImage(size.images[0].src)}
                                             >
+                                                {/* Anchored Size Badge - Unmistakable Relation */}
+                                                <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20">
+                                                    <div className="bg-[#1a1a1c]/80 backdrop-blur-md border border-[#d4af37]/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded shadow-2xl flex items-center gap-1.5 sm:gap-2">
+                                                        <div className="w-0.5 sm:w-1 h-3 sm:h-4 bg-[#d4af37]"></div>
+                                                        <span className="text-[9px] sm:text-[11px] font-bold text-white tracking-widest uppercase">
+                                                            {size.name} <span className="text-[#d4af37]">MM</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
                                                 <TileImage
                                                     key={`${activeCategoryId}-${size.name}-img`}
                                                     img={size.images[0]}
-                                                    className="w-full h-full object-cover transition-all duration-400 group-hover:scale-[1.05]"
+                                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                                                 />
-                                                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                                                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-400">
-                                                    <div className="text-xs sm:text-sm text-center text-white font-medium tracking-wide">
-                                                        Click to enlarge
+                                                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 via-black/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                                    <div className="text-[9px] sm:text-[10px] text-center text-white font-bold tracking-[0.1em] uppercase">
+                                                        Click to Enlarge
                                                     </div>
                                                 </div>
                                             </div>
@@ -496,8 +523,15 @@ const Tiles = () => {
                 </div>
             </section>
 
-            {/* Contact Section */}
-            <section className="py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6" style={{ backgroundColor: '#ffffff' }}>
+            {/* Contact Section - Deferred Rendering */}
+            <section
+                className="py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6"
+                style={{
+                    backgroundColor: '#ffffff',
+                    contentVisibility: 'auto',
+                    containIntrinsicSize: '0 300px'
+                } as any}
+            >
                 <div className="max-w-4xl lg:max-w-6xl mx-auto">
                     <div
                         className="rounded-xl sm:rounded-2xl px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6"
@@ -569,11 +603,29 @@ const Tiles = () => {
                 </div>
             </section>
 
+            {/* Floating Luxury CTA */}
+            <div className="fixed bottom-6 right-6 z-40">
+                <button
+                    onClick={() => window.open('https://wa.me/919779568485', '_blank')}
+                    className="group relative flex items-center gap-3 px-6 py-4 rounded-full bg-[#1a1a1c] text-[#d4af37] border border-[#d4af37]/50 shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-[#d4af37] hover:text-[#1a1a1c]"
+                >
+                    <div className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d4af37]"></span>
+                    </div>
+                    <span className="text-sm font-bold tracking-widest uppercase">Request Luxury Quote</span>
+                </button>
+            </div>
+
+
             {/* Enlarged Image Overlay */}
             {enlargedImage && (
                 <div
-                    className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg overflow-auto"
+                    className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg overflow-auto flex items-center justify-center p-4"
                     onClick={() => setEnlargedImage(null)}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Enlarged product view"
                 >
                     <button
                         className="fixed top-2 sm:top-4 md:top-6 right-2 sm:right-4 md:right-8 z-50 text-white hover:text-gray-300 transition-all duration-300 hover:scale-110 bg-black/30 backdrop-blur-sm rounded-full p-1 sm:p-2"
@@ -598,7 +650,7 @@ const Tiles = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </main>
     );
 };
 

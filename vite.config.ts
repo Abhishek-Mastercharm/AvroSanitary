@@ -19,4 +19,24 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: 'esnext',
+    minify: 'terser',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'gsap-vendor': ['gsap', 'gsap/ScrollTrigger'],
+          'swiper-vendor': ['swiper', 'swiper/react'],
+          'lucide-vendor': ['lucide-react'],
+        },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
 }));
