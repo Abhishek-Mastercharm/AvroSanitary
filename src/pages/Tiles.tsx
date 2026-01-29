@@ -1,4 +1,3 @@
-// pages/Tiles.tsx
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -401,7 +400,7 @@ const Tiles = () => {
                             className="rounded-xl sm:rounded-2xl border p-4 sm:p-5 lg:p-6 max-h-[80vh] sm:max-h-[75vh] lg:max-h-[90vh] overflow-y-auto custom-scrollbar relative"
                             style={{
                                 borderColor: '#d4af37',
-                                backgroundColor: 'rgba(245, 245, 245, 0.98)',
+                                background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 254, 243, 0.9))',
                                 borderWidth: '1px'
                             }}
                         >
@@ -536,7 +535,7 @@ const Tiles = () => {
                     <div
                         className="rounded-xl sm:rounded-2xl px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6"
                         style={{
-                            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(252, 248, 242, 0.9))',
+                            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 254, 243, 0.9))',
                             border: '1px solid #d4af37',
                             backdropFilter: 'blur(12px)',
                             WebkitBackdropFilter: 'blur(12px)',
@@ -569,7 +568,7 @@ const Tiles = () => {
                                 className="hidden md:block w-px h-10 sm:h-12 md:h-16 justify-self-center"
                                 style={{
                                     background: 'linear-gradient(to bottom, transparent, #d4af37, transparent)',
-                                    opacity: 0.5
+                                    opacity: 1
                                 }}
                             />
 

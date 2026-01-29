@@ -43,7 +43,7 @@ const LuxuryBackground: React.FC<LuxuryBackgroundProps> = ({ isMobile }) => {
 
             {/* Layer 2: Base Gray Grid (Stone Block Unit) */}
             <div
-                className="absolute inset-0 opacity-[0.02]"
+                className="absolute inset-0 opacity-[0.008]"
                 style={{
                     backgroundImage: `linear-gradient(to right, #1a1a1c 1px, transparent 1px), linear-gradient(to bottom, #1a1a1c 1px, transparent 1px)`,
                     backgroundSize: '100px 100px'
