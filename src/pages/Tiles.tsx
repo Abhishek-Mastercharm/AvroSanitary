@@ -273,7 +273,7 @@ const Tiles = () => {
                 <div className="max-w-8xl mx-auto">
                     <div className="mb-6 sm:mb-8 lg:mb-10 text-center">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 tracking-tight" style={{ color: '#d4af37' }}>
-                            Our Collection
+                            OUR COLLECTION
                         </h2>
                         {/* Removed the line below the heading */}
                     </div>
@@ -298,7 +298,7 @@ const Tiles = () => {
                                     : 'text-[#333333] hover:text-[#d4af37]'
                                     }`}
                                 style={{
-                                    backgroundColor: activeSection === 'tiles' ? '#d4af37' : 'transparent'
+                                    backgroundColor: activeSection === 'tiles' ? '#d4af37' : 'white'
                                 }}
                             >
                                 Tiles
@@ -315,7 +315,7 @@ const Tiles = () => {
                                     : 'text-[#333333] hover:text-[#d4af37]'
                                     }`}
                                 style={{
-                                    backgroundColor: activeSection === 'marble' ? '#d4af37' : 'transparent'
+                                    backgroundColor: activeSection === 'marble' ? '#d4af37' : 'white'
                                 }}
                             >
                                 Marble & Stones
@@ -527,7 +527,7 @@ const Tiles = () => {
             <section
                 className="py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6"
                 style={{
-                    backgroundColor: '#ffffff',
+                    backgroundColor: 'transparent',
                     contentVisibility: 'auto',
                     containIntrinsicSize: '0 300px'
                 } as any}
@@ -536,29 +536,30 @@ const Tiles = () => {
                     <div
                         className="rounded-xl sm:rounded-2xl px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6"
                         style={{
-                            backgroundColor: 'rgba(245, 245, 245, 0.95)',
-                            border: '1px solid rgba(212, 175, 55, 0.4)',
-                            backdropFilter: 'blur(8px)',
-                            WebkitBackdropFilter: 'blur(8px)'
+                            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(252, 248, 242, 0.9))',
+                            border: '1px solid #d4af37',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)',
+                            boxShadow: '0 8px 32px rgba(212, 175, 55, 0.1)'
                         }}
                     >
                         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 sm:gap-6 md:gap-8 items-center">
                             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0">
                                 <div
-                                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-105"
+                                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-105 group"
                                     style={{
-                                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                                        backgroundColor: 'rgba(212, 175, 55, 0.15)',
                                         border: '1px solid rgba(212, 175, 55, 0.4)',
-                                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.1)'
+                                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.15)'
                                     }}
                                 >
-                                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ color: '#d4af37' }} />
+                                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:scale-110" style={{ color: '#d4af37' }} />
                                 </div>
                                 <div className="min-w-0">
-                                    <div className="text-xs font-bold tracking-wider mb-0.5 sm:mb-1" style={{ color: '#333333' }}>
-                                        EMAIL
+                                    <div className="text-xs font-bold tracking-wider mb-0.5 sm:mb-1 uppercase" style={{ color: '#8a8a8a' }}>
+                                        Email
                                     </div>
-                                    <div className="text-xs sm:text-sm md:text-base break-words" style={{ color: '#333333', opacity: 0.95 }}>
+                                    <div className="text-xs sm:text-sm md:text-base break-words font-semibold" style={{ color: '#1a1a1c' }}>
                                         marsexim@gmail.com
                                     </div>
                                 </div>
@@ -567,27 +568,27 @@ const Tiles = () => {
                             <div
                                 className="hidden md:block w-px h-10 sm:h-12 md:h-16 justify-self-center"
                                 style={{
-                                    backgroundColor: 'rgba(212, 175, 55, 0.25)',
-                                    boxShadow: '0 0 4px rgba(212, 175, 55, 0.3)'
+                                    background: 'linear-gradient(to bottom, transparent, #d4af37, transparent)',
+                                    opacity: 0.5
                                 }}
                             />
 
                             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0">
                                 <div
-                                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-105"
+                                    className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-105 group"
                                     style={{
-                                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                                        backgroundColor: 'rgba(212, 175, 55, 0.15)',
                                         border: '1px solid rgba(212, 175, 55, 0.4)',
-                                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.1)'
+                                        boxShadow: '0 4px 12px rgba(212, 175, 55, 0.15)'
                                     }}
                                 >
-                                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ color: '#d4af37' }} />
+                                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform group-hover:scale-110" style={{ color: '#d4af37' }} />
                                 </div>
                                 <div className="min-w-0">
-                                    <div className="text-xs font-bold tracking-wider mb-0.5 sm:mb-1" style={{ color: '#333333' }}>
-                                        PHONE
+                                    <div className="text-xs font-bold tracking-wider mb-0.5 sm:mb-1 uppercase" style={{ color: '#8a8a8a' }}>
+                                        Phone
                                     </div>
-                                    <div className="text-xs sm:text-sm md:text-base break-words mb-0.5 sm:mb-1" style={{ color: '#333333', opacity: 0.95 }}>
+                                    <div className="text-xs sm:text-sm md:text-base break-words mb-0.5 sm:mb-1 font-semibold" style={{ color: '#1a1a1c' }}>
                                         +91 9779568485 | +91 7087255317
                                     </div>
                                 </div>
@@ -596,7 +597,7 @@ const Tiles = () => {
                     </div>
 
                     <div className="text-center mt-4 sm:mt-5 lg:mt-6">
-                        <div className="text-xs font-medium tracking-wider" style={{ color: '#333333', opacity: 0.7 }}>
+                        <div className="text-xs font-medium tracking-wider" style={{ color: '#1a1a1c', opacity: 0.6 }}>
                             © 2026 Avro Original | All Rights Reserved.
                         </div>
                     </div>
