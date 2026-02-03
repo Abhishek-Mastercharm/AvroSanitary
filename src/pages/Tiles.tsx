@@ -489,7 +489,7 @@ const Tiles = () => {
                                                 />
                                                 <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 via-black/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                                                     <div className="text-[9px] sm:text-[10px] text-center text-white font-bold tracking-[0.1em] uppercase">
-                                                        Click to Enlarge
+                                                        {t('tiles.clickToEnlarge')}
                                                     </div>
                                                 </div>
                                             </div>
