@@ -64,7 +64,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <p className="font-semibold text-black text-sm">{t('contact.phone')}</p>
-                <p className="text-black text-xs whitespace-normal">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
+                <p className="text-black text-xs whitespace-normal">91 9501311070 | +91 8847418317 | +91 9779568485</p>
               </div>
             </div>
           </div>
