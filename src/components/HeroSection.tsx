@@ -2,8 +2,11 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Download, X, Phone, Search, ChevronDown, Check } from 'lucide-react';
+import { Download, X, Phone, Search, ChevronDown, Check, Lock } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { useTranslation } from 'react-i18next';
+import WhatsAppButton from './WhatsAppButton';
+import LanguageSelector from './LanguageSelector';
 
 // EmailJS config (replace with your actual IDs)
 const EMAILJS_SERVICE_ID = 'service_q04xjhj';
@@ -11,6 +14,7 @@ const EMAILJS_TEMPLATE_ID = 'template_vsqunkg';
 const EMAILJS_PUBLIC_KEY = 'PA4ouZXrSJ0WNTVlH';
 
 function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: () => void; onDownload: () => void }) {
+  const { t } = useTranslation();
   const [countryCode, setCountryCode] = useState('+91');
   const [selectedCountry, setSelectedCountry] = useState<{ name: string, code: string, flag: string } | null>(null);
   const [countryOptions, setCountryOptions] = useState<{ name: string, code: string, flag: string }[]>([]);
@@ -23,7 +27,10 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
   const [error, setError] = useState("");
   const [touched, setTouched] = useState(false);
   const [success, setSuccess] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,8 +42,13 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Reset state on modal open/close
   useEffect(() => {
     if (open) {
+      setError('');
+      setLoading(false);
+      setTouched(false);
+
       setCountryLoading(true);
       setCountryError('');
       fetch('https://restcountries.com/v3.1/all?fields=name,idd,flags')
@@ -97,10 +109,11 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
     return "";
   };
 
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
-
     const validationError = validatePhone(contact);
     if (validationError) {
       setError(validationError);
@@ -108,7 +121,9 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
     }
     setError("");
     setLoading(true);
+
     try {
+      // Direct success without OTP
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -117,14 +132,18 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
         },
         EMAILJS_PUBLIC_KEY
       );
+
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
         onClose();
         onDownload();
       }, 1200);
-    } catch (err) {
-      setError("Failed to send. Please try again later.");
+    } catch (err: any) {
+      console.error(err);
+      // Even if email fails, we might want to allow download or show error.
+      // For now, show error.
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -134,6 +153,8 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-charcoalBlack/40 backdrop-blur-sm p-4 animate-in fade-in duration-300">
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-6 sm:p-10 w-full max-w-md relative border border-white/20 flex flex-col items-center">
+
+
         {/* Isolated Background Decoration (Clipping handled here) */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl" />
@@ -152,22 +173,27 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
           <div className="w-12 h-12 bg-cyan-100 rounded-2xl flex items-center justify-center mb-4">
             <Download className="w-6 h-6 text-cyan-600" />
           </div>
-          <h2 className="text-2xl font-bold text-charcoalBlack tracking-tight">Download Our Catalogue</h2>
-          <p className="text-sm text-charcoalBlack/60 mt-2">Get our latest collection directly to your device</p>
+          <h2 className="text-2xl font-bold text-charcoalBlack tracking-tight">{t('downloadModal.title')}</h2>
+          <p className="text-sm text-charcoalBlack/60 mt-2">
+            {t('downloadModal.subtitle')}
+          </p>
         </div>
         {success ? (
           <div className="text-center py-8">
-            <div className="text-green-600 font-bold text-lg mb-2">Success!</div>
+            <div className="text-green-600 font-bold text-lg mb-2">{t('downloadModal.successTitle')}</div>
             <p className="text-charcoalBlack/80 text-sm mb-4">
-              Catalogue requested for:<br />
+              {t('downloadModal.successMessage')}<br />
               <span className="font-bold text-primary">{countryCode} {contact}</span>
             </p>
-            <div className="text-xs text-gray-500">Starting download...</div>
+            <div className="text-xs text-gray-500">{t('downloadModal.downloading')}</div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5 w-full relative z-10">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-charcoalBlack/70 ml-1">Contact Number</label>
+              <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-charcoalBlack/70 ml-1">
+                {t('downloadModal.contactLabel')}
+              </label>
+
               <div className="flex gap-2 items-start relative">
                 {/* Custom Searchable Dropdown */}
                 <div className="relative" style={{ width: '40%', minWidth: '120px' }} ref={dropdownRef}>
@@ -191,7 +217,7 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
                           <span className="truncate">{selectedCountry.code}</span>
                         </>
                       ) : (
-                        "Select"
+                        t('downloadModal.selectCountry')
                       )}
                     </span>
                     <ChevronDown className={`w-3.5 h-3.5 text-charcoalBlack/40 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -204,7 +230,7 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
                           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-charcoalBlack/40" />
                           <input
                             type="text"
-                            placeholder="Search country..."
+                            placeholder={t('downloadModal.searchCountry')}
                             className="w-full bg-white border-none rounded-lg py-2 pl-8 pr-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-cyan-500/10 text-charcoalBlack placeholder:text-charcoalBlack/30"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -254,7 +280,7 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
                           opt.code.includes(searchQuery)
                         ).length === 0 && (
                             <div className="px-3 py-8 text-center text-xs text-charcoalBlack/40">
-                              No countries found
+                              {t('downloadModal.noCountries')}
                             </div>
                           )}
                       </div>
@@ -276,12 +302,13 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
                       }
                     }}
                     required
-                    placeholder="Number"
+                    placeholder={t('downloadModal.numberPlaceholder')}
                     className={`w-full border rounded-xl pl-9 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 text-charcoalBlack bg-white text-xs sm:text-sm font-semibold transition-all shadow-sm ${touched && validatePhone(contact) ? "border-red-400 ring-2 ring-red-500/10" : "border-charcoalBlack/10 focus:border-cyan-500/50"
                       }`}
                   />
                 </div>
               </div>
+
               {touched && validatePhone(contact) && (
                 <span className="text-[11px] text-red-500 mt-2 block font-medium ml-1">
                   {validatePhone(contact)}
@@ -294,8 +321,11 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
               className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3.5 rounded-xl font-bold hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform active:scale-[0.98] disabled:opacity-50 mt-2 text-sm tracking-wide shadow-md"
               disabled={loading}
             >
-              {loading ? "Verifying..." : "Download Now"}
+              {loading ? t('downloadModal.verifying') : t('downloadModal.verifyButton')}
             </button>
+            <p className="text-[10px] text-charcoalBlack/40 text-center mt-3 px-2 leading-tight">
+              {t('downloadModal.privacy')}
+            </p>
           </form>
         )}
       </div>
@@ -304,6 +334,7 @@ function DownloadModal({ open, onClose, onDownload }: { open: boolean; onClose: 
 }
 
 const HeroSection = () => {
+  const { t } = useTranslation();
   const logoRef = useRef(null);
   const headlineRef = useRef(null);
   const taglineRef = useRef(null);
@@ -386,6 +417,8 @@ const HeroSection = () => {
         background: "linear-gradient(to bottom, #362977 0%, #29aae3 40%, #29aae3 70%, #fff 95%, #fff 100%)"
       }}
     >
+      {/* Language Selector - Top Left Corner */}
+      <LanguageSelector className="fixed top-6 left-6 md:top-8 md:left-8 z-50" />
 
       {/* Glassmorphism Effect Layer */}
       <div className="absolute inset-0 z-0 bg-white/5 backdrop-blur-2xl rounded-none pointer-events-none">
@@ -417,7 +450,7 @@ const HeroSection = () => {
           ref={logoRef}
           src="/AVRO LOGO WHITE.png"
           alt="AVRO Logo"
-          className="h-20 sm:h-28 md:h-32 lg:h-40 w-auto mt-8 mb-2 drop-shadow-2xl mx-auto"
+          className="h-20 sm:h-28 md:h-32 lg:h-40 w-auto mt-12 drop-shadow-2xl mx-auto"
         />
         {/* Hero Image Full Width and Responsive */}
         <img
@@ -426,32 +459,52 @@ const HeroSection = () => {
           alt="Hero Section Visual"
           className="w-screen max-w-none h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] object-contain rounded-2xl drop-shadow-2xl"
         />
-        {/* Download Product Catalogue Button Small */}
+        {/* Download Product Catalogue Button - Glassmorphism Style */}
         <button
           ref={ctaRef}
-          className="bg-pureWhite text-black font-semibold px-4 py-2 text-sm rounded-full shadow border border-cyan-600 transition-all duration-300 hover:border-cyan-900 hover:bg-cyan-800 hover:text-white hover:shadow-lg flex items-center gap-2 mb-4 animate-bounce mt-2 mx-auto"
+          className="relative overflow-hidden px-6 py-4 text-sm font-bold rounded-2xl transition-all duration-300 active:scale-95 flex items-center gap-3 mb-14 mx-auto group backdrop-blur-md border-2 animate-bounce shadow-lg discover-product-btn"
+          style={{
+            background: 'linear-gradient(to right, #0891b2, #2563eb)',
+            borderColor: 'rgba(255, 255, 255, 0.3)',
+            color: '#ffffff',
+            boxShadow: '0 8px 32px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.borderColor = 'rgba(8, 145, 178, 0.5)';
+            e.currentTarget.style.color = '#0891b2';
+            e.currentTarget.style.boxShadow = 'inset 0 2px 12px rgba(0,0,0,0.1), 0 18px 42px rgba(8, 145, 178, 0.35), 0 0 0 4px rgba(8, 145, 178, 0.2)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(to right, #0891b2, #2563eb)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            e.currentTarget.style.color = '#ffffff';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
           onClick={() => setModalOpen(true)}
         >
-          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-cyan-100 mr-2">
-            <Download className="w-4 h-4 text-cyan-600" />
+          <Download className="w-5 h-5 transition-all duration-300 group-hover:scale-110" />
+          <span className="font-bold tracking-wide">
+            {t('hero.cta')}
           </span>
-          Download Product Catalogue
+          {/* Arrow icon */}
+          <svg 
+            className="ml-1 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+          {/* Shine effect */}
+          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </button>
       </div>
       <DownloadModal open={modalOpen} onClose={() => setModalOpen(false)} onDownload={handleDownload} />
       {/* Floating WhatsApp Button */}
-      <a
-        href="https://wa.me/919501311070?text=Hello%2C%20I%20am%20interested%20in%20your%20products%21"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed z-50 top-3 right-3 sm:top-5 sm:right-5 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-2 sm:p-4 flex items-center justify-center transition-colors duration-300 group animate-fadeInOut"
-        aria-label="WhatsApp"
-        title="Contact us on WhatsApp"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" className="w-6 h-6 sm:w-7 sm:h-7">
-          <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.58 2.236 6.37L4 29l7.824-2.05A11.94 11.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22c-1.77 0-3.468-.46-4.94-1.33l-.352-.207-4.646 1.217 1.24-4.527-.23-.36A9.94 9.94 0 016 15c0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10zm5.29-7.71c-.29-.145-1.71-.844-1.974-.94-.264-.096-.456-.145-.648.146-.192.29-.744.94-.912 1.134-.168.193-.336.217-.624.072-.288-.145-1.216-.448-2.318-1.428-.857-.764-1.436-1.705-1.606-1.994-.168-.29-.018-.447.127-.592.13-.13.288-.336.432-.504.144-.168.192-.29.288-.483.096-.193.048-.362-.024-.507-.072-.145-.648-1.566-.888-2.146-.234-.563-.474-.486-.648-.495-.168-.007-.36-.009-.552-.009-.192 0-.504.072-.768.362-.264.29-1.008.984-1.008 2.396 0 1.412 1.032 2.773 1.176 2.965.144.193 2.032 3.104 4.928 4.23.688.297 1.224.474 1.642.606.69.22 1.32.189 1.818.115.555-.082 1.71-.698 1.953-1.372.24-.674.24-1.252.168-1.372-.072-.12-.264-.193-.552-.338z" />
-        </svg>
-      </a>
+      <WhatsAppButton />
     </section>
   );
 };

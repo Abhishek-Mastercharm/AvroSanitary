@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "welcome": "BEM-VINDO A",
+    "headline1": "Elevando Espaços com",
+    "headline2": "Precisão e Elegância",
+    "tagline": "Explore nossa gama selecionada de louças sanitárias com uma experiência visual imersiva",
+    "cta": "Descubra Produtos"
+  },
+  "contact": {
+    "title": "Entre em Contato",
+    "desc": "Pronto para transformar seu espaço? Entre em contato para soluções premium de louças sanitárias",
+    "email": "Email",
+    "phone": "Telefone",
+    "whatsapp": "WhatsApp"
+  },
+  "downloadModal": {
+    "title": "Baixar Nosso Catálogo",
+    "subtitle": "Receba nossa última coleção diretamente no seu dispositivo",
+    "contactLabel": "Número de Contato",
+    "numberPlaceholder": "Número",
+    "selectCountry": "Selecionar",
+    "searchCountry": "Buscar país...",
+    "noCountries": "Nenhum país encontrado",
+    "verifyButton": "Verificar e Baixar",
+    "verifying": "Verificando...",
+    "privacy": "Respeitamos sua privacidade.",
+    "successTitle": "Sucesso!",
+    "successMessage": "Catálogo solicitado para:",
+    "downloading": "Iniciando download..."
+  },
+  "product": {
+    "title": "Nossos Produtos",
+    "desc": "Descubra nossa gama completa de produtos de louças sanitárias premium",
+    "novo": "Novo",
+    "novoAlt": "Louças Sanitárias Novo Premium",
+    "novoMonoblock": "Novo Monobloco",
+    "novoMonoblockAlt": "Louças Sanitárias Novo Monobloco",
+    "washBasin": "Lavatório",
+    "washBasinAlt": "Louças Sanitárias Lavatório",
+    "designWB": "Lavatório Design",
+    "designWBAlt": "Louças Sanitárias Lavatório Design",
+    "panUrinalSink": "PAN, Mictório, Pia",
+    "panUrinalSinkAlt": "Louças Sanitárias PAN, Mictório, Pia",
+    "other": "Outro",
+    "otherAlt": "Outros Produtos de Louças Sanitárias",
+    "download": "Baixar PDF {{name}}"
+  },
+  "newlaunch": {
+    "title": "Novos Produtos Lançados",
+    "desc": "Descubra nossas últimas novidades em produtos premium",
+    "oceanVenusWC": "WC OCEAN / VENUS",
+    "novoLuxWC": "WC NOVO LUX",
+    "luxLavabo": "LAVABO LUX",
+    "classicaSet": "CONJUNTO CLASSICA",
+    "chaiseAnglaise": "CADEIRA INGLESA",
+    "wuduLavabo": "LAVABO WUDU",
+    "carreaux": "AZULEJOS",
+    "cpvcTuyaux": "TUBOS CPVC",
+    "modernSink": "Pia Moderna",
+    "elegantWC": "WC Elegante",
+    "designerBasin": "Lavatório Designer",
+    "luxuryTap": "Torneira de Luxo",
+    "compactUrinal": "Mictório Compacto",
+    "classicMonoblock": "Monobloco Clássico",
+    "premiumShower": "Chuveiro Premium"
+  },
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "newlaunch": "Novo Lançamento",
+    "products": "Produtos",
+    "contact": "Contato",
+    "hide": "Ocultar navegação",
+    "show": "Mostrar navegação"
+  },
+  "whatsapp": {
+    "message": "Olá! Estou interessado(a) em seus produtos premium de louças sanitárias."
+  },
+  "tiles": {
+    "backToSanitary": "Voltar para Sanitários",
+    "ourCollection": "NOSSA COLEÇÃO",
+    "tilesTab": "AZULEJOS",
+    "marbleTab": "MÁRMORE E PEDRAS",
+    "heroSubtitle": "Coleção Premium de Azulejos e Superfícies de Luxo",
+    "ctaHeading": "Azulejos | Mármores | Pedras",
+    "ctaButton": "Gama de Azulejos",
+    "categories": {
+      "smallTiles": "Azulejos Pequenos",
+      "smallTilesDesc": "Azulejos compactos e versáteis perfeitos para designs de parede detalhados e espaços pequenos",
+      "mediumTiles": "Azulejos Médios",
+      "mediumTilesDesc": "Azulejos de tamanho equilibrado ideais para paredes e pisos em banheiros, cozinhas e áreas de estar",
+      "largeTiles": "Azulejos Grandes",
+      "largeTilesDesc": "Azulejos de grande formato para pisos luxuosos sem emendas com linhas de rejunte mínimas",
+      "extraLargeTiles": "Azulejos Extra Grandes",
+      "extraLargeTilesDesc": "Azulejos premium de grande dimensão para paredes de destaque e aplicações de piso expansivas",
+      "fullBodyTiles": "Azulejos de Corpo Inteiro",
+      "fullBodyTilesDesc": "Azulejos coloridos em todo o corpo com padrão consistente para áreas de alto tráfego",
+      "marble": "Mármore",
+      "marbleDesc": "Mármore natural requintado para interiores premium e peças de destaque.",
+      "granite": "Granito",
+      "graniteDesc": "Superfícies de granito duráveis e elegantes para beleza duradoura.",
+      "quartz": "Quartzo",
+      "quartzDesc": "Perfeição técnica - Superfícies de quartzo para vida moderna."
+    }
+  }
+}

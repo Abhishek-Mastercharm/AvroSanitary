@@ -13,6 +13,21 @@
     "phone": "Teléfono",
     "whatsapp": "WhatsApp"
   },
+  "downloadModal": {
+    "title": "Descarga Nuestro Catálogo",
+    "subtitle": "Obtén nuestra última colección directamente en tu dispositivo",
+    "contactLabel": "Número de Contacto",
+    "numberPlaceholder": "Número",
+    "selectCountry": "Seleccionar",
+    "searchCountry": "Buscar país...",
+    "noCountries": "No se encontraron países",
+    "verifyButton": "Verificar y Descargar",
+    "verifying": "Verificando...",
+    "privacy": "Respetamos tu privacidad.",
+    "successTitle": "¡Éxito!",
+    "successMessage": "Catálogo solicitado para:",
+    "downloading": "Iniciando descarga..."
+  },
   "product": {
     "title": "Nuestros Productos",
     "desc": "Descubre nuestra gama completa de productos sanitarios premium",
@@ -33,6 +48,14 @@
   "newlaunch": {
     "title": "Nuevos Productos Lanzados",
     "desc": "Descubre nuestras últimas novedades en productos premium",
+    "oceanVenusWC": "WC OCEAN / VENUS",
+    "novoLuxWC": "WC NOVO LUX",
+    "luxLavabo": "LAVABO LUX",
+    "classicaSet": "CONJUNTO CLASSICA",
+    "chaiseAnglaise": "SILLA INGLESA",
+    "wuduLavabo": "LAVABO WUDU",
+    "carreaux": "AZULEJOS",
+    "cpvcTuyaux": "TUBERÍAS CPVC",
     "modernSink": "Fregadero Moderno",
     "elegantWC": "WC Elegante",
     "designerBasin": "Lavabo de Diseño",
@@ -57,5 +80,32 @@
   "langswitch": {
     "aria": "Cambiar idioma",
     "title": "Cambiar idioma"
+  },
+  "tiles": {
+    "backToSanitary": "Volver a Sanitarios",
+    "ourCollection": "NUESTRA COLECCIÓN",
+    "tilesTab": "AZULEJOS",
+    "marbleTab": "MÁRMOL Y PIEDRAS",
+    "heroSubtitle": "Colección Premium de Azulejos y Superficies de Lujo",
+    "ctaHeading": "Azulejos | Mármoles | Piedras",
+    "ctaButton": "Gama de Azulejos",
+    "categories": {
+      "smallTiles": "Azulejos Pequeños",
+      "smallTilesDesc": "Azulejos compactos y versátiles perfectos para diseños de paredes detallados y espacios pequeños",
+      "mediumTiles": "Azulejos Medianos",
+      "mediumTilesDesc": "Azulejos de tamaño equilibrado ideales para paredes y suelos en baños, cocinas y áreas de estar",
+      "largeTiles": "Azulejos Grandes",
+      "largeTilesDesc": "Azulejos de gran formato para pisos lujosos sin costuras con líneas de lechada mínimas",
+      "extraLargeTiles": "Azulejos Extra Grandes",
+      "extraLargeTilesDesc": "Azulejos premium de gran tamaño para paredes decorativas y aplicaciones de pisos expansivas",
+      "fullBodyTiles": "Azulejos de Cuerpo Completo",
+      "fullBodyTilesDesc": "Azulejos coloreados en todo el cuerpo con patrón consistente para áreas de alto tráfico",
+      "marble": "Mármol",
+      "marbleDesc": "Mármol natural exquisito para interiores premium y piezas decorativas.",
+      "granite": "Granito",
+      "graniteDesc": "Superficies de granito duraderas y elegantes para belleza duradera.",
+      "quartz": "Cuarzo",
+      "quartzDesc": "Perfección técnica - Superficies de cuarzo para vida moderna."
+    }
   }
 } 

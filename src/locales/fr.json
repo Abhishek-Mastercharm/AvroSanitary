@@ -8,7 +8,25 @@
   },
   "contact": {
     "title": "Contactez-nous",
-    "desc": "Prêt à transformer votre espace ? Contactez-nous pour des solutions sanitaires haut de gamme"
+    "desc": "Prêt à transformer votre espace ? Contactez-nous pour des solutions sanitaires haut de gamme",
+    "email": "Email",
+    "phone": "Téléphone",
+    "whatsapp": "WhatsApp"
+  },
+  "downloadModal": {
+    "title": "Télécharger Notre Catalogue",
+    "subtitle": "Recevez notre dernière collection directement sur votre appareil",
+    "contactLabel": "Numéro de Contact",
+    "numberPlaceholder": "Numéro",
+    "selectCountry": "Sélectionner",
+    "searchCountry": "Rechercher un pays...",
+    "noCountries": "Aucun pays trouvé",
+    "verifyButton": "Vérifier et Télécharger",
+    "verifying": "Vérification...",
+    "privacy": "Nous respectons votre vie privée.",
+    "successTitle": "Succès!",
+    "successMessage": "Catalogue demandé pour:",
+    "downloading": "Début du téléchargement..."
   },
   "product": {
     "title": "Nos Produits",
@@ -30,6 +48,14 @@
   "newlaunch": {
     "title": "Nouveaux produits lancés",
     "desc": "Découvrez nos dernières nouveautés en produits haut de gamme",
+    "oceanVenusWC": "WC OCEAN / VENUS",
+    "novoLuxWC": "WC NOVO LUX",
+    "luxLavabo": "LAVABO LUX",
+    "classicaSet": "ENSEMBLE CLASSICA",
+    "chaiseAnglaise": "CHAISE ANGLAISE",
+    "wuduLavabo": "LAVABO WUDU",
+    "carreaux": "CARREAUX",
+    "cpvcTuyaux": "TUYAUX CPVC",
     "modernSink": "Évier Moderne",
     "elegantWC": "WC Élégant",
     "designerBasin": "Vasque Designer",
@@ -54,5 +80,32 @@
   "langswitch": {
     "aria": "Changer de langue",
     "title": "Changer de langue"
+  },
+  "tiles": {
+    "backToSanitary": "Retour aux Sanitaires",
+    "ourCollection": "NOTRE COLLECTION",
+    "tilesTab": "CARREAUX",
+    "marbleTab": "MARBRE & PIERRES",
+    "heroSubtitle": "Collection de Carreaux Premium & Surfaces de Luxe",
+    "ctaHeading": "Carreaux | Marbres | Pierres",
+    "ctaButton": "Gamme de Carreaux",
+    "categories": {
+      "smallTiles": "Petits Carreaux",
+      "smallTilesDesc": "Carreaux compacts et polyvalents parfaits pour les conceptions murales détaillées et les petits espaces",
+      "mediumTiles": "Carreaux Moyens",
+      "mediumTilesDesc": "Carreaux de taille équilibrée idéaux pour les murs et les sols des salles de bains, cuisines et espaces de vie",
+      "largeTiles": "Grands Carreaux",
+      "largeTilesDesc": "Carreaux grand format pour un revêtement de sol sans couture et luxueux avec un minimum de joints",
+      "extraLargeTiles": "Carreaux Extra Larges",
+      "extraLargeTilesDesc": "Carreaux surdimensionnés premium pour murs d'accent et applications de revêtement de sol expansives",
+      "fullBodyTiles": "Carreaux Pleine Masse",
+      "fullBodyTilesDesc": "Carreaux colorés dans la masse avec motif cohérent pour les zones à fort trafic",
+      "marble": "Marbre",
+      "marbleDesc": "Marbre naturel exquis pour intérieurs premium et pièces maîtresses.",
+      "granite": "Granit",
+      "graniteDesc": "Surfaces en granit durables et élégantes pour une beauté durable.",
+      "quartz": "Quartz",
+      "quartzDesc": "Perfection technique - Surfaces en quartz pour une vie moderne."
+    }
   }
 } 

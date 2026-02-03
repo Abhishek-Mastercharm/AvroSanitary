@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Card background image - Unsplash tile/marble image
 // Change to local path if needed: '/images/tile-card-bg.jpg'
-const CARD_BG_IMAGE = '/TilesImages/tileHeroImg.png';
+const CARD_BG_IMAGE = '/TilesImages/tileHeroImg.webp';
 
 const PremiumTilesCTA: React.FC = () => {
+  const { t } = useTranslation();
   const [clicked, setClicked] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -17,6 +22,30 @@ const PremiumTilesCTA: React.FC = () => {
     setTimeout(() => setClicked(false), 1200);
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px'
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section
       className="relative w-full overflow-hidden"
@@ -25,12 +54,15 @@ const PremiumTilesCTA: React.FC = () => {
       <div className="relative mx-auto w-full max-w-4xl px-4 sm:px-6 py-10 sm:py-14 md:py-16">
         {/* Rounded luxury box with outline and balanced margins */}
         <div
-          className="relative rounded-3xl border-2 px-6 sm:px-8 py-8 sm:py-10 md:py-12 overflow-hidden"
+          ref={containerRef}
+          className="relative rounded-3xl border-2 px-6 sm:px-8 py-8 sm:py-10 md:py-12 overflow-hidden transition-all duration-1000 ease-out"
           style={{
             // Mustard yellow border matching button
             borderColor: '#d4af37',
             borderWidth: '3px',
             boxShadow: '0 12px 40px rgba(0, 0, 0, 0.25)',
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
           }}
         >
           {/* Background image layer */}
@@ -53,16 +85,19 @@ const PremiumTilesCTA: React.FC = () => {
           {/* Content - positioned above overlay */}
           <div className="relative z-10 text-center">
             <h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+              ref={headingRef}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight transition-all duration-1000 ease-out"
               style={{
                 // Mustard yellow matching button
                 color: '#d4af37',
                 letterSpacing: '0.01em',
                 fontFamily: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
                 textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'scale(1)' : 'scale(0.7)',
               }}
             >
-              Tiles | Marbels | Stones
+              {t('tiles.ctaHeading')}
             </h2>
           </div>
 
@@ -102,7 +137,7 @@ const PremiumTilesCTA: React.FC = () => {
                   }
                 }}
               >
-                Range of Tiles
+                {t('tiles.ctaButton')}
                 {/* Arrow icon */}
                 <svg 
                   className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X, Mail, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { tileCategories, TileCategory, marbleCategories, MarbleCategory } from '@/data/TileData';
 import TileImage from '../components/TileImage';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -12,10 +13,13 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import LuxuryBackground from '../components/LuxuryBackground';
+import WhatsAppButton from '../components/WhatsAppButton';
+import LanguageSelector from '../components/LanguageSelector';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Tiles = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState<'tiles' | 'marble'>('tiles');
     const [activeCategoryId, setActiveCategoryId] = useState<string>(tileCategories[0].id);
     const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
@@ -24,6 +28,21 @@ const Tiles = () => {
     const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
     const rightContentRef = useRef<HTMLDivElement>(null);
     const swiperRef = useRef<SwiperType | null>(null);
+
+    // Translation key mapping for categories
+    const getCategoryTranslationKey = (categoryId: string): { name: string; desc: string } => {
+        const keyMap: Record<string, { name: string; desc: string }> = {
+            'small-tiles': { name: 'tiles.categories.smallTiles', desc: 'tiles.categories.smallTilesDesc' },
+            'medium-tiles': { name: 'tiles.categories.mediumTiles', desc: 'tiles.categories.mediumTilesDesc' },
+            'large-tiles': { name: 'tiles.categories.largeTiles', desc: 'tiles.categories.largeTilesDesc' },
+            'extra-large-tiles': { name: 'tiles.categories.extraLargeTiles', desc: 'tiles.categories.extraLargeTilesDesc' },
+            'full-body-tiles': { name: 'tiles.categories.fullBodyTiles', desc: 'tiles.categories.fullBodyTilesDesc' },
+            'marble-collection': { name: 'tiles.categories.marble', desc: 'tiles.categories.marbleDesc' },
+            'granite-collection': { name: 'tiles.categories.granite', desc: 'tiles.categories.graniteDesc' },
+            'quartz-collection': { name: 'tiles.categories.quartz', desc: 'tiles.categories.quartzDesc' },
+        };
+        return keyMap[categoryId] || { name: categoryId, desc: categoryId };
+    };
 
     // Optimized Data Access: Memoized to prevent re-calculations
     const activeCategories = useMemo(() =>
@@ -164,7 +183,7 @@ const Tiles = () => {
                         transformStyle: 'preserve-3d'
                     }}
                 >
-                    <div className="relative shrink-0 group/image transform-gpu">
+                    <div className="relative shrink-0 group/image transform-gpu flex flex-col items-center">
                         <div
                             className={`rounded-xl overflow-hidden ${stepImg} transition-all duration-500 transform-gpu ${isActive
                                 ? 'ring-4 ring-offset-2 ring-offset-[#ffffff] ring-[#d4af37]'
@@ -183,9 +202,15 @@ const Tiles = () => {
                                 />
                             </div>
                         </div>
+
+                        {/* Category Label - Small Text */}
+                        <div className={`mt-3 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-center whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#d4af37]' : 'text-[#555] group-hover/category:text-[#1a1a1c]'}`}>
+                            {t(getCategoryTranslationKey(category.id).name)}
+                        </div>
+
                         {/* Dotted connector line - Positioned to clear container boundaries */}
                         {isActive && (
-                            <div className="absolute left-1/2 -translate-x-1/2 top-full flex flex-col items-center pt-2 z-50 pointer-events-none">
+                            <div className="absolute left-1/2 -translate-x-1/2 top-full flex flex-col items-center pt-1 z-50 pointer-events-none">
                                 <div
                                     className="w-2 h-2 rounded-full"
                                     style={{ backgroundColor: '#d4af37' }}
@@ -212,38 +237,47 @@ const Tiles = () => {
     return (
         <main className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
             <LuxuryBackground isMobile={isMobile} />
+            
+            {/* Fixed Language Selector - Stays on scroll */}
+            <LanguageSelector className="fixed top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 z-50" />
+            
             {/* Hero Section - GPU Accelerated */}
             <section
                 ref={heroRef}
-                className="relative min-h-[45vh] sm:min-h-[50vh] md:min-h-[55vh] lg:min-h-[60vh] flex items-center justify-center pt-4 sm:pt-6 lg:pt-8 will-change-transform"
+                className="relative w-full will-change-transform"
                 style={{ contentVisibility: 'visible' }}
             >
-                <div className="relative w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-                    <div className="absolute top-4 left-8 md:top-6 md:left-12 z-20">
+                <div className="relative w-full">
+                    {/* Back Button - Inside hero section only, not sticky */}
+                    <div className="absolute top-4 left-4 sm:top-6 sm:left-6 md:top-8 md:left-8 z-[100]">
                         <a
                             href="/"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.location.href = '/';
+                            }}
                             aria-label="Back to sanitary homepage"
-                            className="group inline-flex items-center gap-2 text-sm sm:text-base font-semibold tracking-wide"
-                            style={{ color: '#d4af37' }}
+                            className="group inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base font-semibold tracking-wide cursor-pointer"
+                            style={{ color: '#d4af37', pointerEvents: 'auto' }}
                         >
                             <ChevronLeft
-                                className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:-translate-x-0.5"
+                                className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 transition-transform duration-200 group-hover:-translate-x-0.5"
                                 style={{ color: '#d4af37' }}
                             />
                             <span className="border-b border-transparent transition-colors duration-200" style={{ color: '#d4af37' }}>
-                                Back to Sanitary
+                                {t('tiles.backToSanitary')}
                             </span>
                         </a>
                     </div>
                     <div
-                        className={`relative overflow-hidden rounded-2xl sm:rounded-3xl ${isMobile ? 'h-[35vh]' : 'h-[50vh] sm:h-[55vh] lg:h-[60vh]'}`}
-                        style={{ borderColor: '#d4af37', backgroundColor: '#222224', borderWidth: '3px', borderStyle: 'solid', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
+                        className={`relative overflow-hidden rounded-b-[2rem] sm:rounded-b-[2.5rem] ${isMobile ? 'h-[35vh]' : 'h-[45vh] sm:h-[50vh] lg:h-[55vh]'}`}
+                        style={{ borderColor: '#d4af37', backgroundColor: '#222224', borderWidth: '3px', borderStyle: 'solid', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)', borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
                     >
                         <div className="absolute inset-0 opacity-20 sm:opacity-30">
                             <TileImage
                                 img={{
-                                    src: '/TilesImages/tileHeroImg.png',
-                                    fallback: '/TilesImages/tileHeroImg.png',
+                                    src: '/TilesImages/tileHeroImg.webp',
+                                    fallback: '/TilesImages/tileHeroImg.webp',
                                     alt: 'Premium tiles hero wallpaper',
                                 }}
                                 priority={true}
@@ -252,11 +286,13 @@ const Tiles = () => {
                         </div>
 
                         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
-                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-3 sm:mb-4 md:mb-6 tracking-tight" style={{ color: '#d4af37' }}>
-                                AVRO Tiles
-                            </h1>
+                            <img
+                                src="/AVRO LOGO GOLDEN.png"
+                                alt="AVRO Tiles"
+                                className="h-16 sm:h-20 md:h-24 lg:h-28 mb-4 w-auto object-contain drop-shadow-xl"
+                            />
                             <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-xs sm:max-w-sm md:max-w-md lg:max-w-3xl leading-relaxed px-2" style={{ color: '#dbdcd7' }}>
-                                Premium Tile Collection & Luxury Surfaces
+                                {t('tiles.heroSubtitle')}
                             </p>
                         </div>
                     </div>
@@ -266,19 +302,19 @@ const Tiles = () => {
 
             {/* Main Tiles Showcase Section - Performance Optimized */}
             <section
-                className="relative z-10 py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6 bg-transparent"
+                className="relative z-10 pt-2 sm:pt-2 lg:pt-3 pb-3 sm:pb-4 lg:pb-6 px-3 sm:px-4 md:px-5 bg-transparent"
                 style={{ contentVisibility: 'auto', containIntrinsicSize: '0 1000px' } as any}
             >
                 <div className="max-w-8xl mx-auto">
-                    <div className="mb-6 sm:mb-8 lg:mb-10 text-center">
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 tracking-tight" style={{ color: '#d4af37' }}>
-                            OUR COLLECTION
+                    <div className="mb-4 sm:mb-5 lg:mb-7 text-center">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 tracking-tight" style={{ color: '#d4af37' }}>
+                            {t('tiles.ourCollection')}
                         </h2>
                         {/* Removed the line below the heading */}
                     </div>
 
                     {/* 1. Stylish Breadcrumb Navbar - Accessible TabList */}
-                    <div className="flex justify-center mb-6 sm:mb-8">
+                    <div className="flex justify-center mb-4 sm:mb-5">
                         <div
                             className="inline-flex rounded-xl overflow-hidden border"
                             style={{ borderColor: '#d4af37' }}
@@ -300,7 +336,7 @@ const Tiles = () => {
                                     backgroundColor: activeSection === 'tiles' ? '#d4af37' : 'white'
                                 }}
                             >
-                                Tiles
+                                {t('tiles.tilesTab')}
                             </button>
                             <button
                                 onClick={() => {
@@ -317,23 +353,23 @@ const Tiles = () => {
                                     backgroundColor: activeSection === 'marble' ? '#d4af37' : 'white'
                                 }}
                             >
-                                Marble & Stones
+                                {t('tiles.marbleTab')}
                             </button>
                         </div>
                     </div>
 
                     {/* ROW 1: HORIZONTAL STAIRCASE - Swiper for mobile, Flex for desktop */}
-                    <div className="pt-4 sm:pt-6 mb-12 sm:mb-16 lg:mb-20">
+                    <div className="pt-2 sm:pt-3 mb-6 sm:mb-8 lg:mb-10">
                         {isMobile ? (
                             /* Mobile: Swiper with Navigation and Active Indicator Support */
-                            <div className="relative px-10 sm:px-14">
+                            <div className="relative px-8 sm:px-10">
                                 <Swiper
                                     modules={[FreeMode, Pagination, Navigation]}
-                                    spaceBetween={12}
+                                    spaceBetween={8}
                                     slidesPerView={3}
                                     breakpoints={{
-                                        480: { slidesPerView: 3.5, spaceBetween: 15 },
-                                        640: { slidesPerView: 4, spaceBetween: 20 },
+                                        480: { slidesPerView: 3.5, spaceBetween: 10 },
+                                        640: { slidesPerView: 4, spaceBetween: 12 },
                                     }}
                                     centeredSlides={false}
                                     loop={false}
@@ -383,7 +419,7 @@ const Tiles = () => {
                             </div>
                         ) : (
                             /* Desktop: Simple flex layout showing all categories */
-                            <div className="flex items-end justify-center gap-4 lg:gap-6 xl:gap-8 px-4 lg:px-8">
+                            <div className="flex items-end justify-center gap-2 lg:gap-3 xl:gap-4 px-2 lg:px-4">
                                 {activeCategories.map((category, index) => (
                                     <div key={category.id}>
                                         {renderCategoryTile(category, index)}
@@ -394,10 +430,10 @@ const Tiles = () => {
                     </div>
 
                     {/* ROW 2: ACTIVE CATEGORY DETAILS */}
-                    <div className="relative max-w-4xl mx-auto px-3 sm:px-0">
+                    <div className="relative max-w-4xl mx-auto px-2 sm:px-0">
                         <div
                             ref={rightContentRef}
-                            className="rounded-xl sm:rounded-2xl border p-4 sm:p-5 lg:p-6 max-h-[80vh] sm:max-h-[75vh] lg:max-h-[90vh] overflow-y-auto custom-scrollbar relative"
+                            className="rounded-lg sm:rounded-xl border p-3 sm:p-4 lg:p-5 max-h-[80vh] sm:max-h-[75vh] lg:max-h-[90vh] overflow-y-auto custom-scrollbar relative"
                             style={{
                                 borderColor: '#d4af37',
                                 background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 254, 243, 0.9))',
@@ -405,10 +441,10 @@ const Tiles = () => {
                             }}
                         >
                             {/* Active Category Header */}
-                            <div className="mb-4 sm:mb-5 lg:mb-6">
-                                <div className="inline-block mb-3 sm:mb-4">
+                            <div className="mb-3 sm:mb-4 lg:mb-5">
+                                <div className="inline-block mb-2 sm:mb-3">
                                     <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 tracking-tight uppercase" style={{ color: '#d4af37' }}>
-                                        {activeCategoryData.name}
+                                        {t(getCategoryTranslationKey(activeCategoryId).name)}
                                     </h3>
                                     <div className="w-full h-0.5 bg-[#d4af37] rounded-full opacity-60"></div>
                                 </div>
@@ -421,13 +457,13 @@ const Tiles = () => {
                                         </p>
                                     </div>
                                     <p className="text-sm sm:text-base md:text-lg leading-relaxed font-medium text-[#1a1a1c]/80">
-                                        {activeCategoryData.description}
+                                        {t(getCategoryTranslationKey(activeCategoryId).desc)}
                                     </p>
                                 </div>
                             </div>
 
                             {/* Size Variations - 2 sizes per row for compact view */}
-                            <div key={activeCategoryId} className="grid grid-cols-2 gap-6 sm:gap-8 lg:gap-10 pb-8 sm:pb-10 lg:pb-12">
+                            <div key={activeCategoryId} className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5 pb-4 sm:pb-5 lg:pb-6">
                                 {activeCategoryData.sizes.map((size, sizeIdx) => (
                                     <div key={`${activeCategoryId}-${size.name}-${sizeIdx}`} className="group relative">
                                         {/* Single image for this size with Anchored Badge */}
@@ -524,7 +560,7 @@ const Tiles = () => {
 
             {/* Contact Section - Deferred Rendering */}
             <section
-                className="py-6 sm:py-8 lg:py-10 px-3 sm:px-4 md:px-6"
+                className="py-3 sm:py-4 lg:py-6 px-2 sm:px-3 md:px-4"
                 style={{
                     backgroundColor: 'transparent',
                     contentVisibility: 'auto',
@@ -533,7 +569,7 @@ const Tiles = () => {
             >
                 <div className="max-w-4xl lg:max-w-6xl mx-auto">
                     <div
-                        className="rounded-xl sm:rounded-2xl px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6"
+                        className="rounded-lg sm:rounded-xl px-2 sm:px-3 md:px-4 lg:px-6 py-3 sm:py-4 md:py-5"
                         style={{
                             background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 254, 243, 0.9))',
                             border: '1px solid #d4af37',
@@ -588,14 +624,14 @@ const Tiles = () => {
                                         Phone
                                     </div>
                                     <div className="text-xs sm:text-sm md:text-base break-words mb-0.5 sm:mb-1 font-semibold" style={{ color: '#1a1a1c' }}>
-                                        +91 9779568485 | +91 7087255317
+                                        +91 9501311070 | +91 8847418317 | +91 9779568485
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="text-center mt-4 sm:mt-5 lg:mt-6">
+                    <div className="text-center mt-3 sm:mt-4 lg:mt-5">
                         <div className="text-xs font-medium tracking-wider" style={{ color: '#1a1a1c', opacity: 0.6 }}>
                             © 2026 Avro Original | All Rights Reserved.
                         </div>
@@ -604,18 +640,8 @@ const Tiles = () => {
             </section>
 
             {/* Floating Luxury CTA */}
-            <div className="fixed bottom-6 right-6 z-40">
-                <button
-                    onClick={() => window.open('https://wa.me/919779568485', '_blank')}
-                    className="group relative flex items-center gap-3 px-6 py-4 rounded-full bg-[#1a1a1c] text-[#d4af37] border border-[#d4af37]/50 shadow-2xl transition-all duration-500 hover:scale-105 hover:bg-[#d4af37] hover:text-[#1a1a1c]"
-                >
-                    <div className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4af37] opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d4af37]"></span>
-                    </div>
-                    <span className="text-sm font-bold tracking-widest uppercase">Request Luxury Quote</span>
-                </button>
-            </div>
+            {/* Floating Luxury CTA Replaced with WhatsApp Button */}
+            <WhatsAppButton phoneNumber="919501311070" position="bottom-right" />
 
 
             {/* Enlarged Image Overlay */}

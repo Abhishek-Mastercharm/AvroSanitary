@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 
 const products = [
-  { name: 'OCEAN / VENUS WC', src: '/images/1 (0).jpeg' },
-  { name: 'NOVO LUX WC', src: '/images/1 (1).png' },
-  { name: 'LUX LAVABO', src: '/images/1 (2).png' },
-  { name: 'CLASSICA SET', src: '/images/1 (3).png' },
-  { name: 'CHAISE ANGLAISE', src: '/images/1 (4).png' },
-  { name: 'WUDU LAVABO', src: '/images/1 (5).jpeg' },
-  { name: 'CARREAUX', src: '/images/1 (6).jpg' },
-  { name: 'CPVC tuyaux', src: '/images/1 (7).png' },
+  { nameKey: 'newlaunch.oceanVenusWC', src: '/images/1 (0).jpeg' },
+  { nameKey: 'newlaunch.novoLuxWC', src: '/images/1 (1).png' },
+  { nameKey: 'newlaunch.luxLavabo', src: '/images/1 (2).png' },
+  { nameKey: 'newlaunch.classicaSet', src: '/images/1 (3).png' },
+  { nameKey: 'newlaunch.chaiseAnglaise', src: '/images/1 (4).png' },
+  { nameKey: 'newlaunch.wuduLavabo', src: '/images/1 (5).jpeg' },
+  { nameKey: 'newlaunch.carreaux', src: '/images/1 (6).jpg' },
+  { nameKey: 'newlaunch.cpvcTuyaux', src: '/images/1 (7).png' },
 ];
 
 const NewLaunchSection = () => {
+  const { t } = useTranslation();
   const [hovered, setHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -81,16 +83,16 @@ const NewLaunchSection = () => {
                 >
                   <div
                     className="w-40 h-40 bg-white rounded-lg overflow-hidden flex items-center justify-center group cursor-pointer"
-                    onClick={() => setEnlarged({ src: product.src, alt: product.name })}
+                    onClick={() => setEnlarged({ src: product.src, alt: t(product.nameKey) })}
                   >
                     <img
                       src={product.src}
-                      alt={product.name}
+                      alt={t(product.nameKey)}
                       className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <span className="mt-2 text-center text-sm font-semibold text-gray-700 whitespace-nowrap">
-                    {product.name}
+                    {t(product.nameKey)}
                   </span>
                 </div>
               ))}

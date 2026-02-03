@@ -8,8 +8,6 @@ const LuxuryBackground: React.FC<LuxuryBackgroundProps> = ({ isMobile }) => {
     const bgRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (isMobile) return;
-
         const handleMouseMove = (e: MouseEvent) => {
             if (bgRef.current) {
                 bgRef.current.style.setProperty('--mouse-x', `${e.clientX}px`);
@@ -17,11 +15,22 @@ const LuxuryBackground: React.FC<LuxuryBackgroundProps> = ({ isMobile }) => {
             }
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, [isMobile]);
+        const handleTouchMove = (e: TouchEvent) => {
+            if (bgRef.current && e.touches.length > 0) {
+                const touch = e.touches[0];
+                bgRef.current.style.setProperty('--mouse-x', `${touch.clientX}px`);
+                bgRef.current.style.setProperty('--mouse-y', `${touch.clientY}px`);
+            }
+        };
 
-    if (isMobile) return null;
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
+        
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('touchmove', handleTouchMove);
+        };
+    }, []);
 
     return (
         <div
@@ -50,23 +59,23 @@ const LuxuryBackground: React.FC<LuxuryBackgroundProps> = ({ isMobile }) => {
                 }}
             />
 
-            {/* Layer 3: Interactive Designer Grid (Sharp Gray Strokes) */}
+            {/* Layer 3: Interactive Designer Grid (Sharp Gray Strokes) - All devices */}
             <div
                 className="absolute inset-0 transition-opacity duration-500 will-change-[mask-image]"
                 style={{
                     backgroundImage: `linear-gradient(to right, #4a4a4c 1.2px, transparent 1.2px), linear-gradient(to bottom, #4a4a4c 1.2px, transparent 1.2px)`,
-                    backgroundSize: '100px 100px',
-                    WebkitMaskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 100%)`,
-                    maskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 100%)`,
-                    opacity: 0.18
+                    backgroundSize: isMobile ? '80px 80px' : '100px 100px',
+                    WebkitMaskImage: `radial-gradient(${isMobile ? '350px' : '450px'} circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 100%)`,
+                    maskImage: `radial-gradient(${isMobile ? '350px' : '450px'} circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 100%)`,
+                    opacity: isMobile ? 0.12 : 0.18
                 }}
             />
 
-            {/* Layer 4: Minimal Pointer Spotlight */}
+            {/* Layer 4: Minimal Pointer Spotlight - All devices */}
             <div
                 className="absolute inset-0 will-change-[background]"
                 style={{
-                    background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(0,0,0,0.012), transparent 70%)`,
+                    background: `radial-gradient(${isMobile ? '400px' : '600px'} circle at var(--mouse-x) var(--mouse-y), rgba(0,0,0,0.012), transparent 70%)`,
                 }}
             />
         </div>

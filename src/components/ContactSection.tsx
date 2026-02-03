@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ContactSection = () => {
+  const { t } = useTranslation();
 
   return (
     <section
@@ -51,7 +53,7 @@ const ContactSection = () => {
                 <Mail className="w-5 h-5 text-goldenBronze" />
               </div>
               <div>
-                <p className="font-semibold text-black text-sm">Email</p>
+                <p className="font-semibold text-black text-sm">{t('contact.email')}</p>
                 <p className="text-black text-xs">marsexim@gmail.com</p>
               </div>
             </div>
@@ -61,7 +63,7 @@ const ContactSection = () => {
                 <Phone className="w-5 h-5 text-goldenBronze" />
               </div>
               <div>
-                <p className="font-semibold text-black text-sm">Phone</p>
+                <p className="font-semibold text-black text-sm">{t('contact.phone')}</p>
                 <p className="text-black text-xs whitespace-normal">+91 9501311070  | +91 9779568485 | +91 7087255317</p>
               </div>
             </div>

@@ -13,6 +13,21 @@
     "phone": "Phone",
     "whatsapp": "WhatsApp"
   },
+  "downloadModal": {
+    "title": "Download Our Catalogue",
+    "subtitle": "Get our latest collection directly to your device",
+    "contactLabel": "Contact Number",
+    "numberPlaceholder": "Number",
+    "selectCountry": "Select",
+    "searchCountry": "Search country...",
+    "noCountries": "No countries found",
+    "verifyButton": "Verify & Download",
+    "verifying": "Verifying...",
+    "privacy": "We respect your privacy.",
+    "successTitle": "Success!",
+    "successMessage": "Catalogue requested for:",
+    "downloading": "Starting download..."
+  },
   "product": {
     "title": "Our Products",
     "desc": "Discover our comprehensive range of premium sanitaryware products",
@@ -33,6 +48,14 @@
   "newlaunch": {
     "title": "Newly Launching Products",
     "desc": "Discover our latest arrivals in premium products",
+    "oceanVenusWC": "OCEAN / VENUS WC",
+    "novoLuxWC": "NOVO LUX WC",
+    "luxLavabo": "LUX LAVABO",
+    "classicaSet": "CLASSICA SET",
+    "chaiseAnglaise": "CHAISE ANGLAISE",
+    "wuduLavabo": "WUDU LAVABO",
+    "carreaux": "TILES",
+    "cpvcTuyaux": "CPVC PIPES",
     "modernSink": "Modern Sink",
     "elegantWC": "Elegant WC",
     "designerBasin": "Designer Basin",
@@ -57,5 +80,32 @@
   "langswitch": {
     "aria": "Change language",
     "title": "Change language"
+  },
+  "tiles": {
+    "backToSanitary": "Back to Sanitary",
+    "ourCollection": "OUR COLLECTION",
+    "tilesTab": "TILES",
+    "marbleTab": "MARBLE & STONES",
+    "heroSubtitle": "Premium Tile Collection & Luxury Surfaces",
+    "ctaHeading": "Tiles | Marbles | Stones",
+    "ctaButton": "Range of Tiles",
+    "categories": {
+      "smallTiles": "Small Tiles",
+      "smallTilesDesc": "Compact and versatile tiles perfect for detailed wall designs and small spaces",
+      "mediumTiles": "Medium Tiles",
+      "mediumTilesDesc": "Balanced size tiles ideal for walls and floors in bathrooms, kitchens and living areas",
+      "largeTiles": "Large Tiles",
+      "largeTilesDesc": "Grand format tiles for seamless and luxurious flooring with minimal grout lines",
+      "extraLargeTiles": "Extra Large Tiles",
+      "extraLargeTilesDesc": "Premium oversized tiles for statement walls and expansive flooring applications",
+      "fullBodyTiles": "Full Body Tiles",
+      "fullBodyTilesDesc": "Through-body colored tiles with consistent pattern throughout for high-traffic areas",
+      "marble": "Marble",
+      "marbleDesc": "Exquisite natural marble for premium interiors and statement pieces.",
+      "granite": "Granite",
+      "graniteDesc": "Durable and elegant granite surfaces for lasting beauty.",
+      "quartz": "Quartz",
+      "quartzDesc": "Engineered perfection - Quartz surfaces for modern living."
+    }
   }
 } 
