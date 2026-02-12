@@ -1,13 +1,23 @@
-import Index from "./pages/Index";
-import Tiles from "./pages/Tiles";
-import DevError from "./pages/DevError";
-import NotFound from "./pages/NotFound";
+import { lazy, Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+
+// Lazy load pages for better performance
+const Index = lazy(() => import('./pages/Index'));
+const Tiles = lazy(() => import('./pages/Tiles'));
+const DevError = lazy(() => import('./pages/DevError'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+// Loading component
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-goldenBronze"></div>
+  </div>
+);
 
 const queryClient = new QueryClient();
 
@@ -27,7 +37,11 @@ const App = () => {
   };
 
   if (window.location.pathname === "/deverror") {
-    return <DevError />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <DevError />
+      </Suspense>
+    );
   }
   if (window.location.pathname === "/tiles") {
     return (
@@ -35,13 +49,19 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <Tiles />
+          <Suspense fallback={<PageLoader />}>
+            <Tiles />
+          </Suspense>
         </TooltipProvider>
       </QueryClientProvider>
     );
   }
   if (window.location.pathname !== "/" && window.location.pathname !== "/index") {
-    return <NotFound />;
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <NotFound />
+      </Suspense>
+    );
   }
   return (
     <>
@@ -50,7 +70,9 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <Index />
+          <Suspense fallback={<PageLoader />}>
+            <Index />
+          </Suspense>
         </TooltipProvider>
       </QueryClientProvider>
       {/* Scroll to Top Button */}

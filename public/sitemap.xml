@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Home Page -->
+  <url>
+    <loc>https://avro-sanitary.web.app/</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/images/avro-banner.jpeg</image:loc>
+      <image:title>Avro Original Premium Sanitaryware Collection</image:title>
+      <image:caption>Premium sanitaryware, tiles, marble and bathroom fittings</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Tiles Page -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/small.webp</image:loc>
+      <image:title>Small Tiles Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/medium.webp</image:loc>
+      <image:title>Medium Tiles Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/large.webp</image:loc>
+      <image:title>Large Tiles Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/extra%20large.webp</image:loc>
+      <image:title>Extra Large Tiles Collection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/Full%20Body.webp</image:loc>
+      <image:title>Full Body Tiles Collection</image:title>
+    </image:image>
+  </url>
+
+  <!-- Small Tiles Category -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=small-tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Medium Tiles Category -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=medium-tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Large Tiles Category -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=large-tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Extra Large Tiles Category -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=extra-large-tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Full Body Tiles Category -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=full-body-tiles</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Marble Collection -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=marble-collection</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/All%20Marble%203000x1800%20x%2020%20mm.webp</image:loc>
+      <image:title>Premium Marble Collection</image:title>
+    </image:image>
+  </url>
+
+  <!-- Granite Collection -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=granite-collection</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/granite.webp</image:loc>
+      <image:title>Premium Granite Collection</image:title>
+    </image:image>
+  </url>
+
+  <!-- Quartz Collection -->
+  <url>
+    <loc>https://avro-sanitary.web.app/tiles?category=quartz-collection</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://avro-sanitary.web.app/TilesImages/quartz.webp</image:loc>
+      <image:title>Premium Quartz Collection</image:title>
+    </image:image>
+  </url>
+
+</urlset>

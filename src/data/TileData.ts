@@ -39,7 +39,7 @@ export type TileCategory = {
 export const tileCategories: TileCategory[] = [
   {
     id: 'small-tiles',
-    name: 'Small Tiles',
+    name: 'Small',
     sizeRange: '100x100 to 300x450',
     description: 'Compact and versatile tiles perfect for detailed wall designs and small spaces',
     // Category preview uses first size image
@@ -115,7 +115,7 @@ export const tileCategories: TileCategory[] = [
   },
   {
     id: 'medium-tiles',
-    name: 'Medium Tiles',
+    name: 'Medium',
     sizeRange: '300x600 to 600x600',
     description: 'Balanced size tiles ideal for walls and floors in bathrooms, kitchens and living areas',
     images: [
@@ -170,7 +170,7 @@ export const tileCategories: TileCategory[] = [
   },
   {
     id: 'large-tiles',
-    name: 'Large Tiles',
+    name: 'Large',
     sizeRange: '600x1200 to 800x2400',
     description: 'Grand format tiles for seamless and luxurious flooring with minimal grout lines',
     images: [
@@ -235,7 +235,7 @@ export const tileCategories: TileCategory[] = [
   },
   {
     id: 'extra-large-tiles',
-    name: 'Extra Large Tiles',
+    name: 'Extra Large',
     sizeRange: '800x3000 to 1200x3200',
     description: 'Premium oversized tiles for statement walls and expansive flooring applications',
     images: [

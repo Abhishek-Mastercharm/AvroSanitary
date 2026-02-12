@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /deverror
 
-Sitemap: https://avrosanitary.com/sitemap.xml
+Sitemap: https://avro-sanitary.web.app/sitemap.xml
