@@ -455,7 +455,7 @@ const HeroSection = () => {
         {/* Hero Image Full Width and Responsive */}
         <img
           ref={rightImageRef}
-          src="/images/ProductHeroSection.png"
+          src="/images/ProductHeroSection.webp"
           alt="Hero Section Visual"
           className="w-screen max-w-none h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[60vh] object-contain rounded-2xl drop-shadow-2xl"
         />

@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 
 const products = [
-  { nameKey: 'newlaunch.oceanVenusWC', src: '/images/1 (0).jpeg' },
-  { nameKey: 'newlaunch.novoLuxWC', src: '/images/1 (1).png' },
-  { nameKey: 'newlaunch.luxLavabo', src: '/images/1 (2).png' },
-  { nameKey: 'newlaunch.classicaSet', src: '/images/1 (3).png' },
-  { nameKey: 'newlaunch.chaiseAnglaise', src: '/images/1 (4).png' },
-  { nameKey: 'newlaunch.wuduLavabo', src: '/images/1 (5).jpeg' },
-  { nameKey: 'newlaunch.carreaux', src: '/images/1 (6).jpg' },
-  { nameKey: 'newlaunch.cpvcTuyaux', src: '/images/1 (7).png' },
+  { nameKey: 'newlaunch.oceanVenusWC', src: '/images/1 (0).webp' },
+  { nameKey: 'newlaunch.novoLuxWC', src: '/images/1 (1).webp' },
+  { nameKey: 'newlaunch.luxLavabo', src: '/images/1 (2).webp' },
+  { nameKey: 'newlaunch.classicaSet', src: '/images/1 (3).webp' },
+  { nameKey: 'newlaunch.chaiseAnglaise', src: '/images/1 (4).webp' },
+  { nameKey: 'newlaunch.wuduLavabo', src: '/images/1 (5).webp' },
+  { nameKey: 'newlaunch.carreaux', src: '/images/1 (6).webp' },
+  { nameKey: 'newlaunch.cpvcTuyaux', src: '/images/1 (7).webp' },
 ];
 
 const NewLaunchSection = () => {

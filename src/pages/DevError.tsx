@@ -75,7 +75,7 @@ const DevError = () => {
         </div>
         <div className="w-full max-w-2xl h-[85vh] overflow-y-auto overflow-x-hidden rounded-xl border-2 border-goldenBronze bg-white shadow-lg p-2">
           <img
-            src={'/images/screenshort.png'}
+            src={'/images/screenshort.webp'}
             alt="Website Screenshot Placeholder"
             className="w-full object-contain object-top"
             style={{ maxHeight: 'none' }}

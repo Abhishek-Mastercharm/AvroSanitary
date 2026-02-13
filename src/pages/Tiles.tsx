@@ -273,17 +273,15 @@ const Tiles = () => {
                         className={`relative overflow-hidden rounded-b-[2rem] sm:rounded-b-[2.5rem] ${isMobile ? 'h-[35vh]' : 'h-[45vh] sm:h-[50vh] lg:h-[55vh]'}`}
                         style={{ borderColor: '#d4af37', backgroundColor: '#222224', borderWidth: '3px', borderStyle: 'solid', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)', borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
                     >
-                        <div className="absolute inset-0 opacity-20 sm:opacity-30">
-                            <TileImage
-                                img={{
-                                    src: '/TilesImages/tileHeroImg.webp',
-                                    fallback: '/TilesImages/tileHeroImg.webp',
-                                    alt: 'Premium tiles hero wallpaper',
-                                }}
-                                priority={true}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                backgroundImage: "url('/TilesImages/tileHeroImg.webp')",
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                opacity: 0.35,
+                            }}
+                        />
 
                         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
                             <img

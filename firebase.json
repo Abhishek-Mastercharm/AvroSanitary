@@ -8,7 +8,7 @@
     ],
     "headers": [
       {
-        "source": "images/avro-banner.jpeg",
+        "source": "images/avro-banner.webp",
         "headers": [
           {
             "key": "Cache-Control",
@@ -20,7 +20,7 @@
           },
           {
             "key": "Content-Type",
-            "value": "image/jpeg"
+            "value": "image/webp"
           }
         ]
       },
